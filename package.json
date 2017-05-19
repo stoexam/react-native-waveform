@@ -1,11 +1,52 @@
 {
-  "name": "react-native-waveform",
-  "version": "1.0.0",
-  "description": "",
+  "_args": [
+    [
+      {
+        "raw": "react-native-waveform@D:\\ReactNative\\react-native-waveform",
+        "scope": null,
+        "escapedName": "react-native-waveform",
+        "name": "react-native-waveform",
+        "rawSpec": "D:\\ReactNative\\react-native-waveform",
+        "spec": "D:\\ReactNative\\react-native-waveform",
+        "type": "directory"
+      },
+      "D:\\ReactNative\\practice\\HelloWorld"
+    ]
+  ],
+  "_from": "..\\..\\react-native-waveform",
+  "_id": "react-native-waveform@1.0.0",
+  "_inCache": true,
+  "_location": "/react-native-waveform",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "react-native-waveform@D:\\ReactNative\\react-native-waveform",
+    "scope": null,
+    "escapedName": "react-native-waveform",
+    "name": "react-native-waveform",
+    "rawSpec": "D:\\ReactNative\\react-native-waveform",
+    "spec": "D:\\ReactNative\\react-native-waveform",
+    "type": "directory"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "file:..\\..\\react-native-waveform",
+  "_shasum": "8bf0bc65a6014d90f6a130b8d2562fc7156ddc37",
+  "_shrinkwrap": null,
+  "_spec": "react-native-waveform@D:\\ReactNative\\react-native-waveform",
+  "_where": "D:\\ReactNative\\practice\\HelloWorld",
+  "author": {
+    "name": "lixl"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "license": "MIT",
   "main": "index.js",
+  "name": "react-native-waveform",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "lixl",
-  "license": "MIT"
+  "version": "1.0.0"
 }
