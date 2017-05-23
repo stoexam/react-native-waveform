@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.support.v7.app.AppCompatActivity;
@@ -104,6 +105,20 @@ public class WaveformViewModule extends ReactContextBaseJavaModule {
 
     }
 
+    class MyClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            hide();
+        }
+    }
+
+    TextView btn;
+    private void bindButtonClick(View view){
+        btn = (TextView)view.findViewById(R.id.txtStopVoice);
+        btn.setOnClickListener(new MyClickListener());
+    }
+
     @ReactMethod
     public void init(ReadableMap options){
         activity = getCurrentActivity();
@@ -138,6 +153,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule {
 
             initMediaRecorder();
 
+            bindButtonClick(view);
             //Thread thread = new Thread(this);
 
             Thread thread = new Thread(){
