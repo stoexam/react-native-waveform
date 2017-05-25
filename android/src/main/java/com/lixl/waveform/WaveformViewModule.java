@@ -52,12 +52,12 @@ import android.widget.Toast;
  * <p>
  */
 
-public class WaveformViewModule extends ReactContextBaseJavaModule {
+public class WaveformViewModule extends ReactContextBaseJavaModule implements Runnable {
 
     private MediaRecorder mMediaRecorder;
     private boolean isAlive = true;
     private VoiceLineView voiceLineView;
-    private Handler handler ;
+    //private Handler handler ;
 
     Activity activity;
     private Dialog dialog = null;
@@ -75,7 +75,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void alert(String message) {
-        Toast.makeText(getReactApplicationContext(), message, Toast.LENGTH_LONG).show();
+        Toast.makeText(getReactApplicationContext(), message + " [ " + isAlive + " ] ", Toast.LENGTH_LONG).show();
     }
 
     private void initMediaRecorder(){
@@ -85,7 +85,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule {
         mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
         mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
-        File file = new File(Environment.getExternalStorageDirectory().getPath(), "hello.log");
+        File file = new File(Environment.getExternalStorageDirectory().getPath(), "HelloWorld.log");
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -109,7 +109,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule {
 
         @Override
         public void onClick(View v) {
-            hide();
+            stop();
         }
     }
 
@@ -151,42 +151,11 @@ public class WaveformViewModule extends ReactContextBaseJavaModule {
                 dialog.dismiss();
             }
 
+            voiceLineView = (VoiceLineView)view.findViewById(R.id.voicLine);
             initMediaRecorder();
 
             bindButtonClick(view);
-            //Thread thread = new Thread(this);
-
-            Thread thread = new Thread(){
-                public void run() {
-
-                        Looper.prepare();
-
-                        handler = new Handler() {
-                            @Override
-                            public void handleMessage(Message msg) {
-                                super.handleMessage(msg);
-                                if(mMediaRecorder==null) return;
-                                double ratio = (double) mMediaRecorder.getMaxAmplitude() / 100;
-                                double db = 0;// 分贝
-                                //默认的最大音量是100,可以修改，但其实默认的，在测试过程中就有不错的表现
-                                //你可以传自定义的数字进去，但需要在一定的范围内，比如0-200，就需要在xml文件中配置maxVolume
-                                //同时，也可以配置灵敏度sensibility
-                                if (ratio > 1)
-                                    db = 20 * Math.log10(ratio);
-                                //只要有一个线程，不断调用这个方法，就可以使波形变化
-                                //主要，这个方法必须在ui线程中调用
-                                voiceLineView.setVolume((int) (db));
-                            }
-                        };
-
-                        try {
-                            Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-            };
+            Thread thread = new Thread(this);
             thread.start();
 
         }else {
@@ -195,28 +164,33 @@ public class WaveformViewModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void show() {
+    public void start() {
         if (dialog == null) {
             return;
         }
         if (!dialog.isShowing()) {
+            isAlive = true;
             initMediaRecorder();
             dialog.show();
+            Thread thread = new Thread(this);
+            thread.start();
         }
     }
 
     @ReactMethod
-    public void hide() {
+    public void stop() {
         if (dialog == null) {
             return;
         }
         if (dialog.isShowing()) {
 
             isAlive = false;
+            mMediaRecorder.stop();
             mMediaRecorder.release();
             mMediaRecorder = null;
 
             dialog.dismiss();
+            handler.removeCallbacks(this);
         }
     }
 
@@ -233,7 +207,8 @@ public class WaveformViewModule extends ReactContextBaseJavaModule {
         }
     }
 
-    /*private Handler handler = new Handler() {
+    //private Handler handler = new Handler() {
+    private Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -249,15 +224,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule {
             //主要，这个方法必须在ui线程中调用
             voiceLineView.setVolume((int) (db));
         }
-    };*/
-
-    /*@Override
-    protected void onDestroy() {
-        isAlive = false;
-        mMediaRecorder.release();
-        mMediaRecorder = null;
-        super.onDestroy();
-    }*/
+    };
 
     //@Override
     public void onHostDestroy() {
@@ -266,4 +233,15 @@ public class WaveformViewModule extends ReactContextBaseJavaModule {
         mMediaRecorder = null;
     }
 
+    @Override
+    public void run() {
+        while (isAlive) {
+            handler.sendEmptyMessage(0);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
