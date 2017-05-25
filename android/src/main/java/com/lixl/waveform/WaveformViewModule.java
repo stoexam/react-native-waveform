@@ -81,11 +81,15 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
     private void initMediaRecorder(){
         if (mMediaRecorder == null)
             mMediaRecorder = new MediaRecorder();
+        else {
+            mMediaRecorder.release();
+            mMediaRecorder = new MediaRecorder();
+        }
 
         mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
         mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
-        File file = new File(Environment.getExternalStorageDirectory().getPath(), "HelloWorld.log");
+        File file = new File(Environment.getExternalStorageDirectory().getPath(), "YSApp.log");
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -125,6 +129,8 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         if(activity != null){
             View view = activity.getLayoutInflater().inflate(R.layout.activity_main, null);
             //activity.setContentView(view);
+
+            isAlive = true;
 
             int height = 300;
             if(options.hasKey(BOX_HEIGHT)){
