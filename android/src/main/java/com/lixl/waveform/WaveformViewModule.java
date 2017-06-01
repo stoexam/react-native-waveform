@@ -52,7 +52,7 @@ import android.widget.Toast;
  * <p>
  */
 
-public class WaveformViewModule extends ReactContextBaseJavaModule implements Runnable {
+public class WaveformViewModule extends ReactContextBaseJavaModule implements Runnable, LifecycleEventListener {
 
     private MediaRecorder mMediaRecorder;
     private boolean isAlive = true;
@@ -63,6 +63,9 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
     private Dialog dialog = null;
 
     private static final String BOX_HEIGHT = "boxHeight";
+
+    private static final String CONFIRM_EVENT_NAME = "confirmEvent";
+    private static final String EVENT_KEY_CONFIRM = "confirm";
 
     public WaveformViewModule(ReactApplicationContext reactContext){
         super(reactContext);
@@ -89,7 +92,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
         mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
-        File file = new File(Environment.getExternalStorageDirectory().getPath(), "YSApp.log");
+        File file = new File(Environment.getExternalStorageDirectory().getPath(), "HelloWorld.log");
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -124,14 +127,13 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
     }
 
     @ReactMethod
-    public void init(ReadableMap options){
+    public void _init(ReadableMap options){
         activity = getCurrentActivity();
         if(activity != null){
             View view = activity.getLayoutInflater().inflate(R.layout.activity_main, null);
             //activity.setContentView(view);
 
             isAlive = true;
-
             int height = 300;
             if(options.hasKey(BOX_HEIGHT)){
                 height = options.getInt(BOX_HEIGHT);
@@ -197,6 +199,8 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
 
             dialog.dismiss();
             handler.removeCallbacks(this);
+
+            commonEvent(EVENT_KEY_CONFIRM);
         }
     }
 
@@ -232,7 +236,15 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         }
     };
 
-    //@Override
+    @Override
+    public void onHostPause(){
+
+    }
+    @Override
+    public void onHostResume(){
+
+    }
+    @Override
     public void onHostDestroy() {
         isAlive = false;
         mMediaRecorder.release();
@@ -250,4 +262,27 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             }
         }
     }
+
+    private void commonEvent(String eventKey) {
+        WritableMap map = Arguments.createMap();
+        map.putString("type", eventKey);
+        WritableArray indexes = Arguments.createArray();
+        WritableArray values = Arguments.createArray();
+        /*for (ReturnData data : returnData) {
+            indexes.pushInt(data.getIndex());
+            values.pushString(data.getItem());
+        }*/
+        map.putArray("selectedValue", values);
+        map.putArray("selectedIndex", indexes);
+        sendEvent(getReactApplicationContext(), CONFIRM_EVENT_NAME, map);
+    }
+
+    private void sendEvent(ReactContext reactContext,
+                           String eventName,
+                           @Nullable WritableMap params) {
+        reactContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(eventName, params);
+    }
+
 }
