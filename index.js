@@ -21,5 +21,14 @@ export default {
         this.listener = NativeAppEventEmitter.addListener('confirmEvent', event => {
             fnConf[event['type']](event['selectedValue'], event['selectedIndex']);
         });
+	},
+	start(){
+		WaveformViewModule.start();
+	},
+	stop() {
+		WaveformViewModule.stop();
+	},
+    isWaveformShow(callback){
+		WaveformViewModule.isWaveformShow(callback);
 	}
 }
