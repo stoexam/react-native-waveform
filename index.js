@@ -19,16 +19,19 @@ export default {
 		WaveformViewModule._init(opt);
         this.listener && this.listener.remove();
         this.listener = NativeAppEventEmitter.addListener('confirmEvent', event => {
-            fnConf[event['type']](event['selectedValue'], event['selectedIndex']);
+            fnConf[event['type']](event['voiceResult']);
         });
 	},
-	start(){
-		WaveformViewModule.start();
+	start(options){
+		WaveformViewModule.start(options);
 	},
 	stop() {
 		WaveformViewModule.stop();
 	},
     isWaveformShow(callback){
 		WaveformViewModule.isWaveformShow(callback);
+	},
+	alert(msg){
+    	WaveformViewModule.alert(msg);
 	}
 }
