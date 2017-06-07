@@ -15,3 +15,8 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+# iflytek
+-keep class com.iflytek.** { *; }
+-keep interface com.iflytek.** { *; }
+-dontwarn com.iflytek.**
