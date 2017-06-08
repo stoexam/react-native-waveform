@@ -265,12 +265,14 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
                 mIse.stopEvaluating();
             }
 
-            new Handler().postDelayed(new Runnable(){
+            //commonEvent(EVENT_KEY_CONFIRM);
+            /*new Handler().postDelayed(new Runnable(){
                 public void run() {
                     //execute the task
                     commonEvent(EVENT_KEY_CONFIRM);
                 }
-            }, 1000);
+            }, 1000);*/
+            //将这里的回调，移到了 mEvaluatorListener  的 onResult 中
         }
 
     }
@@ -393,6 +395,8 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
                 mLastResult = builder.toString();
 
                 alert("评测结束");
+
+                commonEvent(EVENT_KEY_CONFIRM);
             }else {
                 showTip("测评进行中");
             }
