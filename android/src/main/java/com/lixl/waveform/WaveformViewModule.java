@@ -394,7 +394,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
                 //mIseStartButton.setEnabled(true);
                 mLastResult = builder.toString();
 
-                alert("评测结束");
+                //alert("评测结束");
 
                 commonEvent(EVENT_KEY_CONFIRM);
             }else {
@@ -464,7 +464,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
 			mToast.setText(str);
 			mToast.show();
 		}*/
-        alert(str);
+        //alert(str);
 	}
 
     private void setParams() {
