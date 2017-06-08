@@ -214,7 +214,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             Thread thread = new Thread(this);
             thread.start();
 
-            mToast = Toast.makeText(activity, "", Toast.LENGTH_LONG);
+            //mToast = Toast.makeText(activity, "", Toast.LENGTH_LONG);
 
         }else {
             Toast.makeText(getReactApplicationContext(), "Activity is null", Toast.LENGTH_SHORT).show();
@@ -236,7 +236,8 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             }
 
             mContext = activity.getApplicationContext();
-            mIse = SpeechEvaluator.createEvaluator(mContext, null);
+            if(mIse == null)
+                mIse = SpeechEvaluator.createEvaluator(mContext, null);
             startEvaluate();
 
             dialog.show();
@@ -263,7 +264,13 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             if(mIse.isEvaluating()) {
                 mIse.stopEvaluating();
             }
-            commonEvent(EVENT_KEY_CONFIRM);
+
+            new Handler().postDelayed(new Runnable(){
+                public void run() {
+                    //execute the task
+                    commonEvent(EVENT_KEY_CONFIRM);
+                }
+            }, 1000);
         }
 
     }
@@ -386,6 +393,8 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
                 mLastResult = builder.toString();
 
                 alert("评测结束");
+            }else {
+                showTip("测评进行中");
             }
         }
 
@@ -418,8 +427,8 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
 
         @Override
         public void onVolumeChanged(int volume, byte[] data) {
-            showTip("当前音量：" + volume);
-            showTip("返回音频数据："+data.length);
+            //showTip("当前音量：" + volume);
+            //showTip("返回音频数据："+data.length);
             Log.d(TAG, "返回音频数据："+data.length);
         }
 
@@ -436,6 +445,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
 
     private void startEvaluate(){
         if (mIse == null) {
+            alert("mIse is null in 'startEvaluate'");
             return;
         }
         String evaText = standardTxt;
@@ -450,7 +460,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
 			mToast.setText(str);
 			mToast.show();
 		}*/
-        //alert(str);
+        alert(str);
 	}
 
     private void setParams() {
