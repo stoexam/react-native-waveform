@@ -246,8 +246,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         }
     }
 
-    @ReactMethod
-    public void stop() {
+    private void hideDialog(){
         if (dialog == null) {
             return;
         }
@@ -261,7 +260,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             dialog.dismiss();
             handler.removeCallbacks(this);
 
-            if(mIse.isEvaluating()) {
+            if (mIse.isEvaluating()) {
                 mIse.stopEvaluating();
             }
 
@@ -273,8 +272,14 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
                 }
             }, 1000);*/
             //将这里的回调，移到了 mEvaluatorListener  的 onResult 中
+
         }
 
+    }
+
+    @ReactMethod
+    public void stop() {
+        hideDialog();
     }
 
     private static final String ERROR_NOT_INIT = "please initialize the component first";
@@ -394,11 +399,12 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
                 //mIseStartButton.setEnabled(true);
                 mLastResult = builder.toString();
 
-                //alert("评测结束");
+                alert("评测结束");
 
+                hideDialog();
                 commonEvent(EVENT_KEY_CONFIRM);
             }else {
-                showTip("测评进行中");
+                //showTip("测评进行中");
             }
         }
 
@@ -411,7 +417,6 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
                 //mResultEditText.setHint("请点击“开始评测”按钮");
             } else {
                 Log.d(TAG, "evaluator over");
-                showTip("evaluator over");
             }
         }
 
@@ -419,14 +424,14 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         public void onBeginOfSpeech() {
             // 此回调表示：sdk内部录音机已经准备好了，用户可以开始语音输入
             Log.d(TAG, "evaluator begin");
-            showTip("evaluator begin");
+            //showTip("evaluator begin");
         }
 
         @Override
         public void onEndOfSpeech() {
             // 此回调表示：检测到了语音的尾端点，已经进入识别过程，不再接受语音输入
             Log.d(TAG, "evaluator stoped");
-            showTip("evaluator stopped");
+            //showTip("evaluator stopped");
         }
 
         @Override
