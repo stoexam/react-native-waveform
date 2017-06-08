@@ -260,10 +260,6 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             dialog.dismiss();
             handler.removeCallbacks(this);
 
-            if (mIse.isEvaluating()) {
-                mIse.stopEvaluating();
-            }
-
             //commonEvent(EVENT_KEY_CONFIRM);
             /*new Handler().postDelayed(new Runnable(){
                 public void run() {
@@ -279,7 +275,9 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
 
     @ReactMethod
     public void stop() {
-        hideDialog();
+        if (mIse.isEvaluating()) {
+            mIse.stopEvaluating();
+        }
     }
 
     private static final String ERROR_NOT_INIT = "please initialize the component first";
