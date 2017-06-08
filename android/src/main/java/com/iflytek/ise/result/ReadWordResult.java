@@ -3,7 +3,9 @@
  */
 package com.iflytek.ise.result;
 
+import com.iflytek.ise.result.entity.Sentence;
 import com.iflytek.ise.result.util.ResultFormatUtil;
+import com.google.gson.Gson;
 
 /**
  * <p>Title: ReadWordResult</p>
@@ -20,7 +22,12 @@ public class ReadWordResult extends Result {
 	
 	@Override
 	public String toString() {
-		StringBuffer buffer = new StringBuffer();
+
+		Gson gson = new Gson();
+		String result = gson.toJson(this);
+		return result;
+
+		/*StringBuffer buffer = new StringBuffer();
 		
 		if ("cn".equals(language)) {
 			buffer.append("[总体结果]\n")
@@ -42,6 +49,6 @@ public class ReadWordResult extends Result {
 				.append(ResultFormatUtil.formatDetails_EN(sentences));
 		}
 		
-		return buffer.toString();
+		return buffer.toString();*/
 	}
 }

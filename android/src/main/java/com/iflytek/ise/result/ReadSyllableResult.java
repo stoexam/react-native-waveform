@@ -3,6 +3,7 @@
  */
 package com.iflytek.ise.result;
 
+import com.google.gson.Gson;
 import com.iflytek.ise.result.util.ResultFormatUtil;
 
 /**
@@ -21,13 +22,18 @@ public class ReadSyllableResult extends Result {
 	
 	@Override
 	public String toString() {
-		StringBuffer buffer = new StringBuffer();
+
+		Gson gson = new Gson();
+		String result = gson.toJson(this);
+		return result;
+
+		/*StringBuffer buffer = new StringBuffer();
 		buffer.append("[总体结果]\n")
 			.append("评测内容：" + content + "\n")
 			.append("朗读时长：" + time_len + "\n")
 			.append("总分：" + total_score + "\n\n")
 			.append("[朗读详情]").append(ResultFormatUtil.formatDetails_CN(sentences));
 		
-		return buffer.toString();
+		return buffer.toString();*/
 	}
 }
