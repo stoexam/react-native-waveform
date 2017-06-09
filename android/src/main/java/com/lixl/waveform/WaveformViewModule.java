@@ -34,6 +34,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReadableNativeMap;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
@@ -207,7 +208,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             if(mIse == null){
                 mIse = SpeechEvaluator.createEvaluator(mContext, null);
             }
-            //alert("is mIse == null ? " + (mIse == null));
+            //showTip("is mIse == null ? " + (mIse == null));
             startEvaluate();
 
             bindButtonClick(view);
@@ -230,8 +231,8 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             isAlive = true;
             initMediaRecorder();
 
-            standardTxt = "";
-            if(options.hasKey(STANDARD_TXT)){
+            //standardTxt = "";
+            if(options != null && options.hasKey(STANDARD_TXT)){
                 standardTxt = options.getString(STANDARD_TXT);
             }
 
@@ -244,6 +245,9 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             Thread thread = new Thread(this);
             thread.start();
         }
+
+
+
     }
 
     private void hideDialog(){
@@ -275,8 +279,11 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
 
     @ReactMethod
     public void stop() {
+        //showTip("mIse is null?=" + (mIse == null));
+        showTip("mIse.isEvaluating()=" + (mIse.isEvaluating()));
         if (mIse.isEvaluating()) {
             mIse.stopEvaluating();
+            showTip("mIse.isEvaluating()=" + (mIse.isEvaluating()));
         }
     }
 
@@ -402,7 +409,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
                 hideDialog();
                 commonEvent(EVENT_KEY_CONFIRM);
             }else {
-                //showTip("测评进行中");
+                showTip("测评进行中");
             }
         }
 
@@ -413,8 +420,10 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
                 showTip("error:"+ error.getErrorCode() + "," + error.getErrorDescription());
                 //mResultEditText.setText("");
                 //mResultEditText.setHint("请点击“开始评测”按钮");
+                startEvaluate();
             } else {
                 Log.d(TAG, "evaluator over");
+                showTip("evaluator over");
             }
         }
 
@@ -422,14 +431,14 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         public void onBeginOfSpeech() {
             // 此回调表示：sdk内部录音机已经准备好了，用户可以开始语音输入
             Log.d(TAG, "evaluator begin");
-            //showTip("evaluator begin");
+            showTip("evaluator begin");
         }
 
         @Override
         public void onEndOfSpeech() {
             // 此回调表示：检测到了语音的尾端点，已经进入识别过程，不再接受语音输入
             Log.d(TAG, "evaluator stoped");
-            //showTip("evaluator stopped");
+            showTip("evaluator stopped");
         }
 
         @Override
@@ -455,6 +464,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             alert("mIse is null in 'startEvaluate'");
             return;
         }
+        showTip(standardTxt);
         String evaText = standardTxt;
         mLastResult = null;
 
