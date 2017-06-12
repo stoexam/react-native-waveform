@@ -199,7 +199,8 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
 
                 dialog.show();
             } else {
-                dialog.dismiss();
+                //dialog.dismiss();
+                dialog.show();
             }
 
             voiceLineView = (VoiceLineView)view.findViewById(R.id.voicLine);
