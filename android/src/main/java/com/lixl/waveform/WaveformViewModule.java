@@ -154,6 +154,9 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
 
         @Override
         public void onClick(View v) {
+            /*TextView btn = (TextView)v.findViewById(R.id.txtStopVoice);
+            btn.setText(R.string.txt_stop_waiting);
+            btn.setClickable(false);*/
             stop();
         }
     }
@@ -199,8 +202,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
 
                 dialog.show();
             } else {
-                //dialog.dismiss();
-                dialog.show();
+                dialog.dismiss();
             }
 
             voiceLineView = (VoiceLineView)view.findViewById(R.id.voicLine);
@@ -264,6 +266,11 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
 
             dialog.dismiss();
             handler.removeCallbacks(this);
+
+            /*if(btn != null) {
+                btn.setText(R.string.txt_stop_record);
+                btn.setClickable(true);
+            }*/
 
             //commonEvent(EVENT_KEY_CONFIRM);
             /*new Handler().postDelayed(new Runnable(){
@@ -405,7 +412,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
                 //mIseStartButton.setEnabled(true);
                 mLastResult = builder.toString();
 
-                alert("评测结束");
+                showTip("评测结束");
 
                 hideDialog();
                 commonEvent(EVENT_KEY_CONFIRM);
@@ -462,7 +469,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
 
     private void startEvaluate(){
         if (mIse == null) {
-            alert("mIse is null in 'startEvaluate'");
+            showTip("mIse is null in 'startEvaluate'");
             return;
         }
         showTip(standardTxt);
