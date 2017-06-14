@@ -138,7 +138,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             destinationDir = ".ys/";
         }
         String fullPath = Environment.getExternalStorageDirectory().getPath() + "/" + destinationDir;
-        alert(fullPath);
+        //alert(fullPath);
         File temp = Environment.getExternalStoragePublicDirectory(fullPath);
         if(!temp.exists()){
             temp.mkdir();
