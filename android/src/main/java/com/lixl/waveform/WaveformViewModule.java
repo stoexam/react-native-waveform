@@ -77,6 +77,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
 
     private static final String BOX_HEIGHT = "boxHeight";   //弹出框 高度
     private static final String STANDARD_TXT = "standardTxt";   //用于识别语音的 标准文字
+    private static final String DESTINATION_DIR = "destinationDir";     //用户语音保存地址
 
     private static final String CONFIRM_EVENT_NAME = "confirmEvent";
     private static final String EVENT_KEY_CONFIRM = "confirm";
@@ -102,6 +103,8 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
     private Toast mToast;
 
     private String standardTxt;
+
+    private String destinationDir;
 
 
     public WaveformViewModule(ReactApplicationContext reactContext){
@@ -130,7 +133,18 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
         mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
-        File file = new File(Environment.getExternalStorageDirectory().getPath(), "HelloWorld.log");
+
+        if(destinationDir == null || destinationDir == "") {
+            destinationDir = ".ys/";
+        }
+        String fullPath = Environment.getExternalStorageDirectory().getPath() + "/" + destinationDir;
+        alert(fullPath);
+        File temp = Environment.getExternalStoragePublicDirectory(fullPath);
+        if(!temp.exists()){
+            temp.mkdir();
+        }
+        //File file = new File(Environment.getExternalStorageDirectory().getPath(), "HelloWorld.log");
+        File file = new File(fullPath, "self");
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -183,6 +197,10 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             }
             if(options.hasKey(STANDARD_TXT)){
                 standardTxt = options.getString(STANDARD_TXT);
+            }
+            //destinationDir = ".ys/";
+            if(options.hasKey(DESTINATION_DIR)){
+                destinationDir = options.getString(DESTINATION_DIR);
             }
             if (dialog == null) {
                 dialog = new Dialog(activity, R.style.Dialog_Full_Screen);
