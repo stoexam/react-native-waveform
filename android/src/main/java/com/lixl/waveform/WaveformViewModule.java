@@ -83,7 +83,6 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
     private static final String EVENT_KEY_CONFIRM = "confirm";
 
     //科大讯飞
-    //private static String TAG = WaveformViewModule.class.getSimpleName();
     private static String TAG = "Waveform";
 
     private final static String PREFER_NAME = "ise_settings";
@@ -118,7 +117,6 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
 
     @ReactMethod
     public void alert(String message) {
-        //Toast.makeText(getReactApplicationContext(), message + " [ " + isAlive + " ] ", Toast.LENGTH_SHORT).show();
         Toast.makeText(getReactApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
@@ -138,7 +136,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             destinationDir = ".ys/";
         }
         String fullPath = Environment.getExternalStorageDirectory().getPath() + "/" + destinationDir;
-        //alert(fullPath);
+        showTip(fullPath);
         File temp = Environment.getExternalStoragePublicDirectory(fullPath);
         if(!temp.exists()){
             temp.mkdir();
@@ -169,9 +167,6 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
 
         @Override
         public void onClick(View v) {
-            /*TextView btn = (TextView)v.findViewById(R.id.txtStopVoice);
-            btn.setText(R.string.txt_stop_waiting);
-            btn.setClickable(false);*/
             stop();
         }
     }
@@ -237,9 +232,6 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             bindButtonClick(view);
             Thread thread = new Thread(this);
             thread.start();
-
-            //mToast = Toast.makeText(activity, "", Toast.LENGTH_LONG);
-
         }else {
             Toast.makeText(getReactApplicationContext(), "Activity is null", Toast.LENGTH_SHORT).show();
         }
@@ -254,7 +246,6 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             isAlive = true;
             initMediaRecorder();
 
-            //standardTxt = "";
             if(options != null && options.hasKey(STANDARD_TXT)){
                 standardTxt = options.getString(STANDARD_TXT);
             }
@@ -268,9 +259,6 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             Thread thread = new Thread(this);
             thread.start();
         }
-
-
-
     }
 
     private void hideDialog(){
@@ -287,11 +275,6 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             dialog.dismiss();
             handler.removeCallbacks(this);
 
-            /*if(btn != null) {
-                btn.setText(R.string.txt_stop_record);
-                btn.setClickable(true);
-            }*/
-
             //commonEvent(EVENT_KEY_CONFIRM);
             /*new Handler().postDelayed(new Runnable(){
                 public void run() {
@@ -300,21 +283,18 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
                 }
             }, 1000);*/
             //将这里的回调，移到了 mEvaluatorListener  的 onResult 中
-
         }
-
     }
 
     @ReactMethod
     public void stop() {
-        //showTip("mIse is null?=" + (mIse == null));
         showTip("mIse.isEvaluating()=" + (mIse.isEvaluating()));
         if (mIse.isEvaluating()) {
             mIse.stopEvaluating();
             showTip("mIse.isEvaluating()=" + (mIse.isEvaluating()));
         }
         hideDialog();
-        commonEvent(EVENT_KEY_CONFIRM);
+        //commonEvent(EVENT_KEY_CONFIRM);
     }
 
     private static final String ERROR_NOT_INIT = "please initialize the component first";
@@ -392,7 +372,6 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             com.iflytek.ise.result.Result result = resultParser.parse(mLastResult);
 
             if (null != result) {
-                //mResultEditText.setText(result.toString());
                 voiceResult = result.toString();
                 Log.d(TAG, "结果：" + voiceResult);
                 showTip("结果：" + voiceResult);
@@ -427,17 +406,11 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             if (isLast) {
                 StringBuilder builder = new StringBuilder();
                 builder.append(result.getResultString());
-
-                if(!TextUtils.isEmpty(builder)) {
-                    //mResultEditText.setText(builder.toString());
-                }
-                //mIseStartButton.setEnabled(true);
                 mLastResult = builder.toString();
 
                 showTip("评测结束");
-
                 //hideDialog();
-                //commonEvent(EVENT_KEY_CONFIRM);
+                commonEvent(EVENT_KEY_CONFIRM);
             }else {
                 showTip("测评进行中");
             }
@@ -445,12 +418,8 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
 
         @Override
         public void onError(SpeechError error) {
-            //mIseStartButton.setEnabled(true);
             if(error != null) {
-                //showTip("error:"+ error.getErrorCode() + "," + error.getErrorDescription());
                 alert("error:"+ error.getErrorCode() + "," + error.getErrorDescription());
-                //mResultEditText.setText("");
-                //mResultEditText.setHint("请点击“开始评测”按钮");
                 startEvaluate();
             } else {
                 Log.d(TAG, "evaluator over");
@@ -503,14 +472,6 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         mIse.startEvaluating(evaText, null, mEvaluatorListener);
     }
 
-    private void showTip(String str) {
-		/*if(!TextUtils.isEmpty(str)) {
-			mToast.setText(str);
-			mToast.show();
-		}*/
-        //alert(str);
-	}
-
     private void setParams() {
         /*SharedPreferences pref = activity.getSharedPreferences(PREFER_NAME, MODE_PRIVATE);
         // 设置评测语言
@@ -551,8 +512,9 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         // 注：AUDIO_FORMAT参数语记需要更新版本才能生效
         mIse.setParameter(SpeechConstant.AUDIO_FORMAT, "wav");
         mIse.setParameter(SpeechConstant.ISE_AUDIO_PATH, Environment.getExternalStorageDirectory().getAbsolutePath() + "/msc/ise.wav");
-
-        //alert("mIse 已设置 setParams");
     }
 
+    private void showTip(String str) {
+        //alert(str);
+	}
 }
