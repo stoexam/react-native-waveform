@@ -145,12 +145,13 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         }
         //File file = new File(Environment.getExternalStorageDirectory().getPath(), "HelloWorld.log");
         File file = new File(fullPath, "self");
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if (file.exists()) {
+            file.delete();
+        }
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         mMediaRecorder.setOutputFile(file.getAbsolutePath());
         mMediaRecorder.setMaxDuration(1000 * 60 * 10);
@@ -312,6 +313,8 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             mIse.stopEvaluating();
             showTip("mIse.isEvaluating()=" + (mIse.isEvaluating()));
         }
+        hideDialog();
+        commonEvent(EVENT_KEY_CONFIRM);
     }
 
     private static final String ERROR_NOT_INIT = "please initialize the component first";
@@ -392,9 +395,9 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
                 //mResultEditText.setText(result.toString());
                 voiceResult = result.toString();
                 Log.d(TAG, "结果：" + voiceResult);
-                //alert("结果：" + voiceResult);
+                showTip("结果：" + voiceResult);
             } else {
-                //alert("解析结果为空");
+                showTip("解析结果为空");
             }
         }
 
@@ -433,8 +436,8 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
 
                 showTip("评测结束");
 
-                hideDialog();
-                commonEvent(EVENT_KEY_CONFIRM);
+                //hideDialog();
+                //commonEvent(EVENT_KEY_CONFIRM);
             }else {
                 showTip("测评进行中");
             }
@@ -444,7 +447,8 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         public void onError(SpeechError error) {
             //mIseStartButton.setEnabled(true);
             if(error != null) {
-                showTip("error:"+ error.getErrorCode() + "," + error.getErrorDescription());
+                //showTip("error:"+ error.getErrorCode() + "," + error.getErrorDescription());
+                alert("error:"+ error.getErrorCode() + "," + error.getErrorDescription());
                 //mResultEditText.setText("");
                 //mResultEditText.setHint("请点击“开始评测”按钮");
                 startEvaluate();
