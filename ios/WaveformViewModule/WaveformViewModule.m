@@ -114,7 +114,7 @@ RCT_EXPORT_METHOD(alert:(NSString *)message){
     //[self.iFlySpeechEvaluator setParameter:@"json" forKey:[IFlySpeechConstant ISE_RESULT_TYPE]];
     
     //[self.iFlySpeechEvaluator setParameter:@"eva.pcm" forKey:[IFlySpeechConstant ISE_AUDIO_PATH]];
-    [self.iFlySpeechEvaluator setParameter:@"self" forKey:[IFlySpeechConstant ISE_AUDIO_PATH]];
+    [self.iFlySpeechEvaluator setParameter:@"self.mp3" forKey:[IFlySpeechConstant ISE_AUDIO_PATH]];
     
     NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
     
