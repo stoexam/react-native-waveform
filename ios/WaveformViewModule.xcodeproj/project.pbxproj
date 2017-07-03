@@ -1,0 +1,546 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8405E9181EFE5F1D008C4FE5 /* WaveformViewModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9171EFE5F1D008C4FE5 /* WaveformViewModule.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8405E91F1EFE5FE3008C4FE5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8405E91E1EFE5FE3008C4FE5 /* AVFoundation.framework */; };
+		8405E9211EFE5FF4008C4FE5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8405E9201EFE5FF4008C4FE5 /* SystemConfiguration.framework */; };
+		8405E9231EFE5FFF008C4FE5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8405E9221EFE5FFF008C4FE5 /* Foundation.framework */; };
+		8405E9251EFE6014008C4FE5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8405E9241EFE6014008C4FE5 /* CoreTelephony.framework */; };
+		8405E9271EFE601F008C4FE5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8405E9261EFE601F008C4FE5 /* AudioToolbox.framework */; };
+		8405E9291EFE6034008C4FE5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8405E9281EFE6034008C4FE5 /* UIKit.framework */; };
+		8405E92B1EFE6040008C4FE5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8405E92A1EFE6040008C4FE5 /* CoreLocation.framework */; };
+		8405E92D1EFE604F008C4FE5 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8405E92C1EFE604F008C4FE5 /* Contacts.framework */; };
+		8405E92F1EFE6057008C4FE5 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8405E92E1EFE6057008C4FE5 /* AddressBook.framework */; };
+		8405E9311EFE6066008C4FE5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8405E9301EFE6066008C4FE5 /* QuartzCore.framework */; };
+		8405E9331EFE6073008C4FE5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8405E9321EFE6073008C4FE5 /* CoreGraphics.framework */; };
+		8405E99A1F009A62008C4FE5 /* ISEParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9991F009A62008C4FE5 /* ISEParams.m */; };
+		8405E9B81F009C58008C4FE5 /* ISEResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9A11F009C58008C4FE5 /* ISEResult.m */; };
+		8405E9B91F009C58008C4FE5 /* ISEResultFinal.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9A31F009C58008C4FE5 /* ISEResultFinal.m */; };
+		8405E9BA1F009C58008C4FE5 /* ISEResultPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9A51F009C58008C4FE5 /* ISEResultPhone.m */; };
+		8405E9BB1F009C58008C4FE5 /* ISEResultReadSentence.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9A71F009C58008C4FE5 /* ISEResultReadSentence.m */; };
+		8405E9BC1F009C58008C4FE5 /* ISEResultReadSyllable.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9A91F009C58008C4FE5 /* ISEResultReadSyllable.m */; };
+		8405E9BD1F009C58008C4FE5 /* ISEResultReadWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9AB1F009C58008C4FE5 /* ISEResultReadWord.m */; };
+		8405E9BE1F009C58008C4FE5 /* ISEResultSentence.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9AD1F009C58008C4FE5 /* ISEResultSentence.m */; };
+		8405E9BF1F009C58008C4FE5 /* ISEResultSyll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9AF1F009C58008C4FE5 /* ISEResultSyll.m */; };
+		8405E9C01F009C58008C4FE5 /* ISEResultTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9B11F009C58008C4FE5 /* ISEResultTools.m */; };
+		8405E9C11F009C58008C4FE5 /* ISEResultWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9B31F009C58008C4FE5 /* ISEResultWord.m */; };
+		8405E9C21F009C58008C4FE5 /* ISEResultXmlParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9B51F009C58008C4FE5 /* ISEResultXmlParser.m */; };
+		8405E9DC1F009C9E008C4FE5 /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9C51F009C9E008C4FE5 /* AlertView.m */; };
+		8405E9DD1F009C9E008C4FE5 /* PcmPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9C81F009C9E008C4FE5 /* PcmPlayer.m */; };
+		8405E9DE1F009C9E008C4FE5 /* PopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9CB1F009C9E008C4FE5 /* PopupView.m */; };
+		8405E9DF1F009C9E008C4FE5 /* SBJson4Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9CF1F009C9E008C4FE5 /* SBJson4Parser.m */; };
+		8405E9E01F009C9E008C4FE5 /* SBJson4StreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9D11F009C9E008C4FE5 /* SBJson4StreamParser.m */; };
+		8405E9E11F009C9E008C4FE5 /* SBJson4StreamParserState.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9D31F009C9E008C4FE5 /* SBJson4StreamParserState.m */; };
+		8405E9E21F009C9E008C4FE5 /* SBJson4StreamTokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9D51F009C9E008C4FE5 /* SBJson4StreamTokeniser.m */; };
+		8405E9E31F009C9E008C4FE5 /* SBJson4StreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9D71F009C9E008C4FE5 /* SBJson4StreamWriter.m */; };
+		8405E9E41F009C9E008C4FE5 /* SBJson4StreamWriterState.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9D91F009C9E008C4FE5 /* SBJson4StreamWriterState.m */; };
+		8405E9E51F009C9E008C4FE5 /* SBJson4Writer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9DB1F009C9E008C4FE5 /* SBJson4Writer.m */; };
+		8405E9FB1F00B066008C4FE5 /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8405E9F41F00AB52008C4FE5 /* libz.1.dylib */; };
+		8405E9FE1F00B4B8008C4FE5 /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8405E9191EFE5F25008C4FE5 /* iflyMSC.framework */; };
+		8405EA011F00BD53008C4FE5 /* libc++.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8405EA001F00BD53008C4FE5 /* libc++.1.dylib */; };
+		8405EA031F00BD75008C4FE5 /* libicucore.A.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8405EA021F00BD75008C4FE5 /* libicucore.A.dylib */; };
+		8405EA041F00BE35008C4FE5 /* iflyMSC.framework in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9191EFE5F25008C4FE5 /* iflyMSC.framework */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		845972F91F01C88600628E1E /* WaveformDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 845972F81F01C88600628E1E /* WaveformDialog.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8405E90F1EFE5D7D008C4FE5 /* libWaveformViewModule.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWaveformViewModule.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8405E9161EFE5F1D008C4FE5 /* WaveformViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveformViewModule.h; sourceTree = "<group>"; };
+		8405E9171EFE5F1D008C4FE5 /* WaveformViewModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveformViewModule.m; sourceTree = "<group>"; };
+		8405E9191EFE5F25008C4FE5 /* iflyMSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iflyMSC.framework; sourceTree = "<group>"; };
+		8405E91E1EFE5FE3008C4FE5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		8405E9201EFE5FF4008C4FE5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		8405E9221EFE5FFF008C4FE5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		8405E9241EFE6014008C4FE5 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		8405E9261EFE601F008C4FE5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		8405E9281EFE6034008C4FE5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		8405E92A1EFE6040008C4FE5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		8405E92C1EFE604F008C4FE5 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
+		8405E92E1EFE6057008C4FE5 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		8405E9301EFE6066008C4FE5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		8405E9321EFE6073008C4FE5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		8405E9981F009A62008C4FE5 /* ISEParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISEParams.h; sourceTree = "<group>"; };
+		8405E9991F009A62008C4FE5 /* ISEParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISEParams.m; sourceTree = "<group>"; };
+		8405E9A01F009C58008C4FE5 /* ISEResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISEResult.h; sourceTree = "<group>"; };
+		8405E9A11F009C58008C4FE5 /* ISEResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISEResult.m; sourceTree = "<group>"; };
+		8405E9A21F009C58008C4FE5 /* ISEResultFinal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISEResultFinal.h; sourceTree = "<group>"; };
+		8405E9A31F009C58008C4FE5 /* ISEResultFinal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISEResultFinal.m; sourceTree = "<group>"; };
+		8405E9A41F009C58008C4FE5 /* ISEResultPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISEResultPhone.h; sourceTree = "<group>"; };
+		8405E9A51F009C58008C4FE5 /* ISEResultPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISEResultPhone.m; sourceTree = "<group>"; };
+		8405E9A61F009C58008C4FE5 /* ISEResultReadSentence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISEResultReadSentence.h; sourceTree = "<group>"; };
+		8405E9A71F009C58008C4FE5 /* ISEResultReadSentence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISEResultReadSentence.m; sourceTree = "<group>"; };
+		8405E9A81F009C58008C4FE5 /* ISEResultReadSyllable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISEResultReadSyllable.h; sourceTree = "<group>"; };
+		8405E9A91F009C58008C4FE5 /* ISEResultReadSyllable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISEResultReadSyllable.m; sourceTree = "<group>"; };
+		8405E9AA1F009C58008C4FE5 /* ISEResultReadWord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISEResultReadWord.h; sourceTree = "<group>"; };
+		8405E9AB1F009C58008C4FE5 /* ISEResultReadWord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISEResultReadWord.m; sourceTree = "<group>"; };
+		8405E9AC1F009C58008C4FE5 /* ISEResultSentence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISEResultSentence.h; sourceTree = "<group>"; };
+		8405E9AD1F009C58008C4FE5 /* ISEResultSentence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISEResultSentence.m; sourceTree = "<group>"; };
+		8405E9AE1F009C58008C4FE5 /* ISEResultSyll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISEResultSyll.h; sourceTree = "<group>"; };
+		8405E9AF1F009C58008C4FE5 /* ISEResultSyll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISEResultSyll.m; sourceTree = "<group>"; };
+		8405E9B01F009C58008C4FE5 /* ISEResultTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISEResultTools.h; sourceTree = "<group>"; };
+		8405E9B11F009C58008C4FE5 /* ISEResultTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISEResultTools.m; sourceTree = "<group>"; };
+		8405E9B21F009C58008C4FE5 /* ISEResultWord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISEResultWord.h; sourceTree = "<group>"; };
+		8405E9B31F009C58008C4FE5 /* ISEResultWord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISEResultWord.m; sourceTree = "<group>"; };
+		8405E9B41F009C58008C4FE5 /* ISEResultXmlParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISEResultXmlParser.h; sourceTree = "<group>"; };
+		8405E9B51F009C58008C4FE5 /* ISEResultXmlParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISEResultXmlParser.m; sourceTree = "<group>"; };
+		8405E9C41F009C9E008C4FE5 /* AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertView.h; sourceTree = "<group>"; };
+		8405E9C51F009C9E008C4FE5 /* AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertView.m; sourceTree = "<group>"; };
+		8405E9C71F009C9E008C4FE5 /* PcmPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PcmPlayer.h; sourceTree = "<group>"; };
+		8405E9C81F009C9E008C4FE5 /* PcmPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PcmPlayer.m; sourceTree = "<group>"; };
+		8405E9C91F009C9E008C4FE5 /* PcmPlayerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PcmPlayerDelegate.h; sourceTree = "<group>"; };
+		8405E9CA1F009C9E008C4FE5 /* PopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupView.h; sourceTree = "<group>"; };
+		8405E9CB1F009C9E008C4FE5 /* PopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopupView.m; sourceTree = "<group>"; };
+		8405E9CD1F009C9E008C4FE5 /* SBJson4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson4.h; sourceTree = "<group>"; };
+		8405E9CE1F009C9E008C4FE5 /* SBJson4Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson4Parser.h; sourceTree = "<group>"; };
+		8405E9CF1F009C9E008C4FE5 /* SBJson4Parser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson4Parser.m; sourceTree = "<group>"; };
+		8405E9D01F009C9E008C4FE5 /* SBJson4StreamParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson4StreamParser.h; sourceTree = "<group>"; };
+		8405E9D11F009C9E008C4FE5 /* SBJson4StreamParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson4StreamParser.m; sourceTree = "<group>"; };
+		8405E9D21F009C9E008C4FE5 /* SBJson4StreamParserState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson4StreamParserState.h; sourceTree = "<group>"; };
+		8405E9D31F009C9E008C4FE5 /* SBJson4StreamParserState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson4StreamParserState.m; sourceTree = "<group>"; };
+		8405E9D41F009C9E008C4FE5 /* SBJson4StreamTokeniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson4StreamTokeniser.h; sourceTree = "<group>"; };
+		8405E9D51F009C9E008C4FE5 /* SBJson4StreamTokeniser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson4StreamTokeniser.m; sourceTree = "<group>"; };
+		8405E9D61F009C9E008C4FE5 /* SBJson4StreamWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson4StreamWriter.h; sourceTree = "<group>"; };
+		8405E9D71F009C9E008C4FE5 /* SBJson4StreamWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson4StreamWriter.m; sourceTree = "<group>"; };
+		8405E9D81F009C9E008C4FE5 /* SBJson4StreamWriterState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson4StreamWriterState.h; sourceTree = "<group>"; };
+		8405E9D91F009C9E008C4FE5 /* SBJson4StreamWriterState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson4StreamWriterState.m; sourceTree = "<group>"; };
+		8405E9DA1F009C9E008C4FE5 /* SBJson4Writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson4Writer.h; sourceTree = "<group>"; };
+		8405E9DB1F009C9E008C4FE5 /* SBJson4Writer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson4Writer.m; sourceTree = "<group>"; };
+		8405E9E61F009CF5008C4FE5 /* Definition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Definition.h; sourceTree = "<group>"; };
+		8405E9F41F00AB52008C4FE5 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
+		8405E9F91F00AF0C008C4FE5 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
+		8405EA001F00BD53008C4FE5 /* libc++.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.1.dylib"; path = "../../../../../../../../../../usr/lib/libc++.1.dylib"; sourceTree = "<group>"; };
+		8405EA021F00BD75008C4FE5 /* libicucore.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.A.dylib; path = ../../../../../../../../../../usr/lib/libicucore.A.dylib; sourceTree = "<group>"; };
+		845972F71F01C85800628E1E /* WaveformDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WaveformDialog.h; sourceTree = "<group>"; };
+		845972F81F01C88600628E1E /* WaveformDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveformDialog.m; sourceTree = "<group>"; };
+		845972FA1F020E9700628E1E /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		845972FC1F020EBD00628E1E /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = ../../../../../../../../../../usr/lib/libxml2.2.dylib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8405E91A1EFE5FBA008C4FE5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8405EA031F00BD75008C4FE5 /* libicucore.A.dylib in Frameworks */,
+				8405EA011F00BD53008C4FE5 /* libc++.1.dylib in Frameworks */,
+				8405E9FE1F00B4B8008C4FE5 /* iflyMSC.framework in Frameworks */,
+				8405E9FB1F00B066008C4FE5 /* libz.1.dylib in Frameworks */,
+				8405E9331EFE6073008C4FE5 /* CoreGraphics.framework in Frameworks */,
+				8405E9311EFE6066008C4FE5 /* QuartzCore.framework in Frameworks */,
+				8405E92F1EFE6057008C4FE5 /* AddressBook.framework in Frameworks */,
+				8405E92D1EFE604F008C4FE5 /* Contacts.framework in Frameworks */,
+				8405E92B1EFE6040008C4FE5 /* CoreLocation.framework in Frameworks */,
+				8405E9291EFE6034008C4FE5 /* UIKit.framework in Frameworks */,
+				8405E9271EFE601F008C4FE5 /* AudioToolbox.framework in Frameworks */,
+				8405E9251EFE6014008C4FE5 /* CoreTelephony.framework in Frameworks */,
+				8405E9231EFE5FFF008C4FE5 /* Foundation.framework in Frameworks */,
+				8405E9211EFE5FF4008C4FE5 /* SystemConfiguration.framework in Frameworks */,
+				8405E91F1EFE5FE3008C4FE5 /* AVFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8405E99F1F009C58008C4FE5 /* Results */ = {
+			isa = PBXGroup;
+			children = (
+				8405E9A01F009C58008C4FE5 /* ISEResult.h */,
+				8405E9A11F009C58008C4FE5 /* ISEResult.m */,
+				8405E9A21F009C58008C4FE5 /* ISEResultFinal.h */,
+				8405E9A31F009C58008C4FE5 /* ISEResultFinal.m */,
+				8405E9A41F009C58008C4FE5 /* ISEResultPhone.h */,
+				8405E9A51F009C58008C4FE5 /* ISEResultPhone.m */,
+				8405E9A61F009C58008C4FE5 /* ISEResultReadSentence.h */,
+				8405E9A71F009C58008C4FE5 /* ISEResultReadSentence.m */,
+				8405E9A81F009C58008C4FE5 /* ISEResultReadSyllable.h */,
+				8405E9A91F009C58008C4FE5 /* ISEResultReadSyllable.m */,
+				8405E9AA1F009C58008C4FE5 /* ISEResultReadWord.h */,
+				8405E9AB1F009C58008C4FE5 /* ISEResultReadWord.m */,
+				8405E9AC1F009C58008C4FE5 /* ISEResultSentence.h */,
+				8405E9AD1F009C58008C4FE5 /* ISEResultSentence.m */,
+				8405E9AE1F009C58008C4FE5 /* ISEResultSyll.h */,
+				8405E9AF1F009C58008C4FE5 /* ISEResultSyll.m */,
+				8405E9B01F009C58008C4FE5 /* ISEResultTools.h */,
+				8405E9B11F009C58008C4FE5 /* ISEResultTools.m */,
+				8405E9B21F009C58008C4FE5 /* ISEResultWord.h */,
+				8405E9B31F009C58008C4FE5 /* ISEResultWord.m */,
+				8405E9B41F009C58008C4FE5 /* ISEResultXmlParser.h */,
+				8405E9B51F009C58008C4FE5 /* ISEResultXmlParser.m */,
+			);
+			path = Results;
+			sourceTree = "<group>";
+		};
+		8405E9C31F009C9E008C4FE5 /* tools */ = {
+			isa = PBXGroup;
+			children = (
+				8405E9C41F009C9E008C4FE5 /* AlertView.h */,
+				8405E9C51F009C9E008C4FE5 /* AlertView.m */,
+				8405E9C61F009C9E008C4FE5 /* pcmPlayerCode */,
+				8405E9CA1F009C9E008C4FE5 /* PopupView.h */,
+				8405E9CB1F009C9E008C4FE5 /* PopupView.m */,
+				8405E9CC1F009C9E008C4FE5 /* SBJson */,
+			);
+			path = tools;
+			sourceTree = "<group>";
+		};
+		8405E9C61F009C9E008C4FE5 /* pcmPlayerCode */ = {
+			isa = PBXGroup;
+			children = (
+				8405E9C71F009C9E008C4FE5 /* PcmPlayer.h */,
+				8405E9C81F009C9E008C4FE5 /* PcmPlayer.m */,
+				8405E9C91F009C9E008C4FE5 /* PcmPlayerDelegate.h */,
+			);
+			path = pcmPlayerCode;
+			sourceTree = "<group>";
+		};
+		8405E9CC1F009C9E008C4FE5 /* SBJson */ = {
+			isa = PBXGroup;
+			children = (
+				8405E9CD1F009C9E008C4FE5 /* SBJson4.h */,
+				8405E9CE1F009C9E008C4FE5 /* SBJson4Parser.h */,
+				8405E9CF1F009C9E008C4FE5 /* SBJson4Parser.m */,
+				8405E9D01F009C9E008C4FE5 /* SBJson4StreamParser.h */,
+				8405E9D11F009C9E008C4FE5 /* SBJson4StreamParser.m */,
+				8405E9D21F009C9E008C4FE5 /* SBJson4StreamParserState.h */,
+				8405E9D31F009C9E008C4FE5 /* SBJson4StreamParserState.m */,
+				8405E9D41F009C9E008C4FE5 /* SBJson4StreamTokeniser.h */,
+				8405E9D51F009C9E008C4FE5 /* SBJson4StreamTokeniser.m */,
+				8405E9D61F009C9E008C4FE5 /* SBJson4StreamWriter.h */,
+				8405E9D71F009C9E008C4FE5 /* SBJson4StreamWriter.m */,
+				8405E9D81F009C9E008C4FE5 /* SBJson4StreamWriterState.h */,
+				8405E9D91F009C9E008C4FE5 /* SBJson4StreamWriterState.m */,
+				8405E9DA1F009C9E008C4FE5 /* SBJson4Writer.h */,
+				8405E9DB1F009C9E008C4FE5 /* SBJson4Writer.m */,
+			);
+			path = SBJson;
+			sourceTree = "<group>";
+		};
+		BF53719229FD95876ABBE82A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				845972FC1F020EBD00628E1E /* libxml2.2.dylib */,
+				845972FA1F020E9700628E1E /* libxml2.tbd */,
+				8405EA021F00BD75008C4FE5 /* libicucore.A.dylib */,
+				8405EA001F00BD53008C4FE5 /* libc++.1.dylib */,
+				8405E9F91F00AF0C008C4FE5 /* libz.1.2.5.tbd */,
+				8405E9F41F00AB52008C4FE5 /* libz.1.dylib */,
+				8405E9321EFE6073008C4FE5 /* CoreGraphics.framework */,
+				8405E9301EFE6066008C4FE5 /* QuartzCore.framework */,
+				8405E92E1EFE6057008C4FE5 /* AddressBook.framework */,
+				8405E92C1EFE604F008C4FE5 /* Contacts.framework */,
+				8405E92A1EFE6040008C4FE5 /* CoreLocation.framework */,
+				8405E9281EFE6034008C4FE5 /* UIKit.framework */,
+				8405E9261EFE601F008C4FE5 /* AudioToolbox.framework */,
+				8405E9241EFE6014008C4FE5 /* CoreTelephony.framework */,
+				8405E9221EFE5FFF008C4FE5 /* Foundation.framework */,
+				8405E9201EFE5FF4008C4FE5 /* SystemConfiguration.framework */,
+				8405E91E1EFE5FE3008C4FE5 /* AVFoundation.framework */,
+				8405E9191EFE5F25008C4FE5 /* iflyMSC.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E839CE1F1B3EF54100115CBE = {
+			isa = PBXGroup;
+			children = (
+				E839CE2A1B3EF54100115CBE /* WaveformViewModule */,
+				E839CE291B3EF54100115CBE /* Products */,
+				BF53719229FD95876ABBE82A /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		E839CE291B3EF54100115CBE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8405E90F1EFE5D7D008C4FE5 /* libWaveformViewModule.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E839CE2A1B3EF54100115CBE /* WaveformViewModule */ = {
+			isa = PBXGroup;
+			children = (
+				8405E9E61F009CF5008C4FE5 /* Definition.h */,
+				8405E9C31F009C9E008C4FE5 /* tools */,
+				8405E99F1F009C58008C4FE5 /* Results */,
+				8405E9981F009A62008C4FE5 /* ISEParams.h */,
+				8405E9991F009A62008C4FE5 /* ISEParams.m */,
+				8405E9161EFE5F1D008C4FE5 /* WaveformViewModule.h */,
+				8405E9171EFE5F1D008C4FE5 /* WaveformViewModule.m */,
+				845972F71F01C85800628E1E /* WaveformDialog.h */,
+				845972F81F01C88600628E1E /* WaveformDialog.m */,
+			);
+			path = WaveformViewModule;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8405E90E1EFE5D7D008C4FE5 /* WaveformViewModule */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8405E9151EFE5D7D008C4FE5 /* Build configuration list for PBXNativeTarget "WaveformViewModule" */;
+			buildPhases = (
+				8405E90D1EFE5D7D008C4FE5 /* Sources */,
+				8405E91A1EFE5FBA008C4FE5 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WaveformViewModule;
+			productName = WaveformViewModule;
+			productReference = 8405E90F1EFE5D7D008C4FE5 /* libWaveformViewModule.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E839CE201B3EF54100115CBE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0620;
+				ORGANIZATIONNAME = "Erdem Başeğmez";
+				TargetAttributes = {
+					8405E90E1EFE5D7D008C4FE5 = {
+						CreatedOnToolsVersion = 8.3;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = E839CE231B3EF54100115CBE /* Build configuration list for PBXProject "WaveformViewModule" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E839CE1F1B3EF54100115CBE;
+			productRefGroup = E839CE291B3EF54100115CBE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8405E90E1EFE5D7D008C4FE5 /* WaveformViewModule */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8405E90D1EFE5D7D008C4FE5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8405EA041F00BE35008C4FE5 /* iflyMSC.framework in Sources */,
+				845972F91F01C88600628E1E /* WaveformDialog.m in Sources */,
+				8405E9E01F009C9E008C4FE5 /* SBJson4StreamParser.m in Sources */,
+				8405E9181EFE5F1D008C4FE5 /* WaveformViewModule.m in Sources */,
+				8405E9BE1F009C58008C4FE5 /* ISEResultSentence.m in Sources */,
+				8405E99A1F009A62008C4FE5 /* ISEParams.m in Sources */,
+				8405E9C21F009C58008C4FE5 /* ISEResultXmlParser.m in Sources */,
+				8405E9BD1F009C58008C4FE5 /* ISEResultReadWord.m in Sources */,
+				8405E9C11F009C58008C4FE5 /* ISEResultWord.m in Sources */,
+				8405E9E21F009C9E008C4FE5 /* SBJson4StreamTokeniser.m in Sources */,
+				8405E9E51F009C9E008C4FE5 /* SBJson4Writer.m in Sources */,
+				8405E9DD1F009C9E008C4FE5 /* PcmPlayer.m in Sources */,
+				8405E9E41F009C9E008C4FE5 /* SBJson4StreamWriterState.m in Sources */,
+				8405E9BB1F009C58008C4FE5 /* ISEResultReadSentence.m in Sources */,
+				8405E9BC1F009C58008C4FE5 /* ISEResultReadSyllable.m in Sources */,
+				8405E9DC1F009C9E008C4FE5 /* AlertView.m in Sources */,
+				8405E9E31F009C9E008C4FE5 /* SBJson4StreamWriter.m in Sources */,
+				8405E9B81F009C58008C4FE5 /* ISEResult.m in Sources */,
+				8405E9E11F009C9E008C4FE5 /* SBJson4StreamParserState.m in Sources */,
+				8405E9B91F009C58008C4FE5 /* ISEResultFinal.m in Sources */,
+				8405E9C01F009C58008C4FE5 /* ISEResultTools.m in Sources */,
+				8405E9DE1F009C9E008C4FE5 /* PopupView.m in Sources */,
+				8405E9DF1F009C9E008C4FE5 /* SBJson4Parser.m in Sources */,
+				8405E9BF1F009C58008C4FE5 /* ISEResultSyll.m in Sources */,
+				8405E9BA1F009C58008C4FE5 /* ISEResultPhone.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		8405E9131EFE5D7D008C4FE5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/**",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../react-native/React",
+					"$(SRCROOT)/node_modules/react-native/React",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		8405E9141EFE5D7D008C4FE5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/**",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../react-native/React",
+					"$(SRCROOT)/node_modules/react-native/React",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		E839CE3A1B3EF54100115CBE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../react-native/React",
+					"$(SRCROOT)/node_modules/react-native/React",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E839CE3B1B3EF54100115CBE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../react-native/React",
+					"$(SRCROOT)/node_modules/react-native/React",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8405E9151EFE5D7D008C4FE5 /* Build configuration list for PBXNativeTarget "WaveformViewModule" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8405E9131EFE5D7D008C4FE5 /* Debug */,
+				8405E9141EFE5D7D008C4FE5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E839CE231B3EF54100115CBE /* Build configuration list for PBXProject "WaveformViewModule" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E839CE3A1B3EF54100115CBE /* Debug */,
+				E839CE3B1B3EF54100115CBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E839CE201B3EF54100115CBE /* Project object */;
+}
