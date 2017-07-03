@@ -132,7 +132,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
         mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
 
-        if(destinationDir == null || destinationDir == "") {
+        /*if(destinationDir == null || destinationDir == "") {
             destinationDir = ".ys/";
         }
         String fullPath = Environment.getExternalStorageDirectory().getPath() + "/" + destinationDir;
@@ -140,7 +140,8 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         File temp = Environment.getExternalStoragePublicDirectory(fullPath);
         if(!temp.exists()){
             temp.mkdir();
-        }
+        }*/
+        String fullPath = mContext.getApplicationContext().getExternalFilesDir("").getAbsolutePath();
         //File file = new File(Environment.getExternalStorageDirectory().getPath(), "HelloWorld.log");
         File file = new File(fullPath, "self");
         if (file.exists()) {
@@ -409,7 +410,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
                 mLastResult = builder.toString();
 
                 showTip("评测结束");
-                //hideDialog();
+                hideDialog();
                 commonEvent(EVENT_KEY_CONFIRM);
             }else {
                 showTip("测评进行中");
