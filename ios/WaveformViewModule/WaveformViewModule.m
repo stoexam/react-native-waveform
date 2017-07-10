@@ -494,28 +494,6 @@ RCT_EXPORT_METHOD(isWaveformShow:
 }
 
 - (void)commonEvent {
-    /*
-    WritableMap map = Arguments.createMap();
-    map.putString("type", eventKey);
-    
-    String voiceResult = "";
-    // 解析最终结果
-    if (!TextUtils.isEmpty(mLastResult)) {
-        com.iflytek.ise.result.xml.XmlResultParser resultParser = new com.iflytek.ise.result.xml.XmlResultParser();
-        com.iflytek.ise.result.Result result = resultParser.parse(mLastResult);
-        
-        if (null != result) {
-            voiceResult = result.toString();
-            Log.d(TAG, "结果：" + voiceResult);
-            showTip("结果：" + voiceResult);
-        } else {
-            showTip("解析结果为空");
-        }
-    }
-    
-    map.putString("voiceResult", voiceResult);
-    sendEvent(getReactApplicationContext(), CONFIRM_EVENT_NAME, map);
-     */
     
     NSLog(@"===================resultText xml====================");
     NSLog(@"%@", self.resultText);
@@ -547,8 +525,8 @@ RCT_EXPORT_METHOD(isWaveformShow:
     if ([jsonData length] > 0 && error == nil){
         resultJson = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     }
-    NSLog(@"===================json====================");
-    NSLog(@"%@", resultJson);
+    //NSLog(@"===================json====================");
+    //NSLog(@"%@", resultJson);
     
     NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
     [dic setValue:@"confirm" forKey:@"type"];
@@ -575,125 +553,6 @@ RCT_EXPORT_METHOD(isWaveformShow:
     }
     NSLog(@"onIFlyRecorderError: %d", error);
 }
-
-
-/*static NSString *LocalizedEvaString(NSString *key, NSString *comment) {
-    return NSLocalizedStringFromTable(key, @"eva/eva", comment);
-}
-#pragma mark -
-
-- (void)viewWillAppear:(BOOL)animated {
-    
-    // register for keyboard notifications
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-    
-    [super viewWillAppear:animated];
-    self.iFlySpeechEvaluator.delegate = self;
-    
-    self.isSessionResultAppear=YES;
-    self.isSessionEnd=YES;
-    //self.startBtn.enabled=YES;
-}
-
-- (void)viewWillDisappear:(BOOL)animated{
-    
-    //     unregister for keyboard notifications while not visible.
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardWillShowNotification
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardWillHideNotification
-                                                  object:nil];
-    [self.iFlySpeechEvaluator cancel];
-    self.iFlySpeechEvaluator.delegate = nil;
-    //self.resultView.text =KCResultNotify1;
-    self.resultText=@"";
-    
-    [_pcmRecorder stop];
-    _pcmRecorder.delegate = nil;
-    
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    // adjust the UI for iOS 7
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
-    if (IOS7_OR_LATER) {
-//        self.edgesForExtendedLayout = UIRectEdgeNone;
-//        self.extendedLayoutIncludesOpaqueBars = NO;
-//        self.modalPresentationCapturesStatusBarAppearance = NO;
-//        self.navigationController.navigationBar.translucent = NO;
-    }
-#endif
-    
-    //键盘工具栏
-    UIBarButtonItem *spaceBtnItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                                                                                  target:nil
-                                                                                  action:nil];
-    UIBarButtonItem *hideBtnItem = [[UIBarButtonItem alloc] initWithTitle:KCIseHideBtnTitle
-                                                                    style:UIBarButtonItemStylePlain
-                                                                   target:self
-                                                                   action:@selector(onKeyBoardDown:)];
-    [hideBtnItem setTintColor:[UIColor whiteColor]];
- 
-    UIToolbar *keyboardToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, _DEMO_UI_TOOLBAR_HEIGHT)];
-    keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
-    NSArray *array = [NSArray arrayWithObjects:spaceBtnItem, hideBtnItem, nil];
-    [keyboardToolbar setItems:array];
-    self.textView.inputAccessoryView = keyboardToolbar;
-    
-    self.textView.layer.cornerRadius = 8;
-    self.textView.layer.borderWidth = 1;
-    self.textView.layer.borderColor =[[UIColor whiteColor] CGColor];
-    
-    self.resultView.layer.cornerRadius = 8;
-    self.resultView.layer.borderWidth = 1;
-    self.resultView.layer.borderColor =[[UIColor whiteColor] CGColor];
-    [self.resultView setEditable:NO];
- 
-    self.popupView = [[PopupView alloc]initWithFrame:CGRectMake(100, 300, 0, 0)];
-    //self.popupView.ParentView = self.view;
-    
-    
-    if (!self.iFlySpeechEvaluator) {
-        self.iFlySpeechEvaluator = [IFlySpeechEvaluator sharedInstance];
-    }
-    self.iFlySpeechEvaluator.delegate = self;
-    //清空参数，目的是评测和听写的参数采用相同数据
-    [self.iFlySpeechEvaluator setParameter:@"" forKey:[IFlySpeechConstant PARAMS]];
-    _isSessionResultAppear=YES;
-    _isSessionEnd=YES;
-    _isValidInput=YES;
-    self.iseParams=[ISEParams fromUserDefaults];
-    //[self reloadCategoryText];
-    
-    //初始化录音器
-    if (_pcmRecorder == nil)
-    {
-        _pcmRecorder = [IFlyPcmRecorder sharedInstance];
-    }
-    
-    _pcmRecorder.delegate = self;
-    
-    [_pcmRecorder setSample:@"16000"];
-    
-    [_pcmRecorder setSaveAudioPath:nil];    //不保存录音文件
-    
-    //避免同时产生多个按钮事件
-    //[self setExclusiveTouchForButtons:self.view];
-}
- */
 
 //设置ifly的参数
 -(void)reloadCategoryText{
