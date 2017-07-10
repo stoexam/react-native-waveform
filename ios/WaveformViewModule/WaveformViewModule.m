@@ -437,6 +437,11 @@ RCT_EXPORT_METHOD(isWaveformShow:
         
         [self commonEvent];
         NSLog(@"[错误码:%d][错误:%@]",[errorCode errorCode], [errorCode errorDesc]);
+        
+        NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
+        [dic setValue:@"confirm" forKey:@"type"];
+        [dic setValue:@"" forKey:@"voiceResult"];
+        _pick.bolock(dic);
     }
     
     //[self performSelectorOnMainThread:@selector(resetBtnSatus:) withObject:errorCode waitUntilDone:NO];
