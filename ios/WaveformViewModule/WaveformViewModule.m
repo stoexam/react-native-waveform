@@ -435,6 +435,7 @@ RCT_EXPORT_METHOD(isWaveformShow:
         [self.popupView setText:[NSString stringWithFormat:@"错误码：%d %@",[errorCode errorCode],[errorCode errorDesc]]];
         //[self.view addSubview:self.popupView];
         
+        [self commonEvent];
         NSLog(@"[错误码:%d][错误:%@]",[errorCode errorCode], [errorCode errorDesc]);
     }
     
