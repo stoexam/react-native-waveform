@@ -420,9 +420,11 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         @Override
         public void onError(SpeechError error) {
             if(error != null) {
-                alert("error:"+ error.getErrorCode() + "," + error.getErrorDescription());
-                //startEvaluate();
+                showTip("error:"+ error.getErrorCode() + "," + error.getErrorDescription());
+                alert(error.getErrorDescription());
+                hideDialog();
                 commonEvent(EVENT_KEY_CONFIRM);
+                //startEvaluate();
             } else {
                 Log.d(TAG, "evaluator over");
                 showTip("evaluator over");
