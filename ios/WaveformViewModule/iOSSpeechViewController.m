@@ -13,9 +13,11 @@
 @property (nonatomic,strong) SFSpeechRecognizer *speechRecognizer;
 @property (nonatomic,strong) AVAudioEngine *audioEngine;
 @property (nonatomic,strong) SFSpeechRecognitionTask *recognitionTask;
-@property (weak, nonatomic) IBOutlet UILabel *resultStringLable;
+//@property (weak, nonatomic) IBOutlet UILabel *resultStringLable;
+@property (nonatomic, strong) NSString *resultString;
 @property (nonatomic,strong) SFSpeechAudioBufferRecognitionRequest *recognitionRequest;
-@property (weak, nonatomic) IBOutlet UIButton *recordButton;
+//@property (weak, nonatomic) IBOutlet UIButton *recordButton;
+@property (nonatomic, strong) NSString *recordTips;
 
 @end
 
@@ -23,8 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.recordButton.enabled = NO;
-    // Do any additional setup after loading the view from its nib.
+    //self.recordButton.enabled = NO;
 }
 
 /**
@@ -44,7 +45,8 @@
         }
         else
         {
-            self.resultStringLable.text = result.bestTranscription.formattedString;
+            //self.resultStringLable.text = result.bestTranscription.formattedString;
+            self.resultString = result.bestTranscription.formattedString;
         }
     }];
 
@@ -56,21 +58,25 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             switch (status) {
                 case SFSpeechRecognizerAuthorizationStatusNotDetermined:
-                    self.recordButton.enabled = NO;
-                    [self.recordButton setTitle:@"语音识别未授权" forState:UIControlStateDisabled];
+                    //self.recordButton.enabled = NO;
+                    //[self.recordButton setTitle:@"语音识别未授权" forState:UIControlStateDisabled];
+                    self.recordTips = @"语音识别未授权";
                     break;
                 case SFSpeechRecognizerAuthorizationStatusDenied:
-                    self.recordButton.enabled = NO;
-                    [self.recordButton setTitle:@"用户未授权使用语音识别" forState:UIControlStateDisabled];
+                    //self.recordButton.enabled = NO;
+                    //[self.recordButton setTitle:@"用户未授权使用语音识别" forState:UIControlStateDisabled];
+                    self.recordTips = @"用户未授权使用语音识别";
                     break;
                 case SFSpeechRecognizerAuthorizationStatusRestricted:
-                    self.recordButton.enabled = NO;
-                    [self.recordButton setTitle:@"语音识别在这台设备上受到限制" forState:UIControlStateDisabled];
+                    //self.recordButton.enabled = NO;
+                    //[self.recordButton setTitle:@"语音识别在这台设备上受到限制" forState:UIControlStateDisabled];
+                    self.recordTips = @"语音识别在这台设备上受到限制";
                     
                     break;
                 case SFSpeechRecognizerAuthorizationStatusAuthorized:
-                    self.recordButton.enabled = YES;
-                    [self.recordButton setTitle:@"开始录音" forState:UIControlStateNormal];
+                    //self.recordButton.enabled = YES;
+                    //[self.recordButton setTitle:@"开始录音" forState:UIControlStateNormal];
+                    self.recordTips = @"开始录音";
                     break;
                     
                 default:
@@ -86,16 +92,36 @@
         if (_recognitionRequest) {
             [_recognitionRequest endAudio];
         }
-        self.recordButton.enabled = NO;
-        [self.recordButton setTitle:@"正在停止" forState:UIControlStateDisabled];
+        //self.recordButton.enabled = NO;
+        //[self.recordButton setTitle:@"正在停止" forState:UIControlStateDisabled];
+        self.recordTips = @"正在停止";
         
     }
     else{
         [self startRecording];
-        [self.recordButton setTitle:@"停止录音" forState:UIControlStateNormal];
+        //[self.recordButton setTitle:@"停止录音" forState:UIControlStateNormal];
+        self.recordTips = @"正在录音";
         
     }
 }
+
+- (void)start{
+    if(!self.audioEngine.isRunning){
+        [self startRecording];
+        self.recordTips = @"正在录音";
+    }
+}
+
+-(void)stop{
+    if(self.audioEngine.isRunning){
+        [self.audioEngine stop];
+        if(_recognitionRequest){
+            [_recognitionRequest endAudio];
+        }
+        self.recordTips = @"正在停止";
+    }
+}
+
 - (void)startRecording{
     if (_recognitionTask) {
         [_recognitionTask cancel];
@@ -121,7 +147,8 @@
         __strong typeof(weakSelf) strongSelf = weakSelf;
         BOOL isFinal = NO;
         if (result) {
-            strongSelf.resultStringLable.text = result.bestTranscription.formattedString;
+            //strongSelf.resultStringLable.text = result.bestTranscription.formattedString;
+            strongSelf.resultString = result.bestTranscription.formattedString;
             isFinal = result.isFinal;
         }
         if (error || isFinal) {
@@ -129,8 +156,9 @@
             [inputNode removeTapOnBus:0];
             strongSelf.recognitionTask = nil;
             strongSelf.recognitionRequest = nil;
-            strongSelf.recordButton.enabled = YES;
-            [strongSelf.recordButton setTitle:@"开始录音" forState:UIControlStateNormal];
+            //strongSelf.recordButton.enabled = YES;
+            //[strongSelf.recordButton setTitle:@"开始录音" forState:UIControlStateNormal];
+            strongSelf.recordTips = @"开始录音";
         }
      
     }];
@@ -146,7 +174,8 @@
     [self.audioEngine prepare];
     [self.audioEngine startAndReturnError:&error];
      NSParameterAssert(!error);
-    self.resultStringLable.text = @"正在录音。。。";
+    //self.resultStringLable.text = @"正在录音。。。";
+    self.resultString = @"正在录音。。。";
 }
 #pragma mark - lazyload
 - (AVAudioEngine *)audioEngine{
@@ -168,12 +197,14 @@
 #pragma mark - SFSpeechRecognizerDelegate
 - (void)speechRecognizer:(SFSpeechRecognizer *)speechRecognizer availabilityDidChange:(BOOL)available{
     if (available) {
-        self.recordButton.enabled = YES;
-        [self.recordButton setTitle:@"开始录音" forState:UIControlStateNormal];
+        //self.recordButton.enabled = YES;
+        //[self.recordButton setTitle:@"开始录音" forState:UIControlStateNormal];
+        self.recordTips = @"开始录音";
     }
     else{
-        self.recordButton.enabled = NO;
-        [self.recordButton setTitle:@"语音识别不可用" forState:UIControlStateDisabled];
+        //self.recordButton.enabled = NO;
+        //[self.recordButton setTitle:@"语音识别不可用" forState:UIControlStateDisabled];
+        self.recordTips = @"语音识别不可用";
     }
 }
 - (void)didReceiveMemoryWarning {

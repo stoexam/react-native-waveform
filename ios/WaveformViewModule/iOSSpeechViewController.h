@@ -8,4 +8,7 @@
 #import <UIKit/UIKit.h>
 @interface iOSSpeechViewController : UIViewController
 
++ (void)start;
++ (void)stop;
+
 @end

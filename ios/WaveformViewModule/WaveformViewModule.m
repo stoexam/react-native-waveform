@@ -26,6 +26,8 @@
 #import "WaveformDialog.h"
 #import "lame.h"
 
+#import "iOSSpeechViewController.h"
+
 #pragma mark - const values
 
 NSString* const KCIseHideBtnTitle=@"隐藏";
@@ -421,7 +423,8 @@ RCT_EXPORT_METHOD(isWaveformShow:
         unsigned char mp3_buffer[MP3_SIZE];
         
         lame_t lame = lame_init();
-        lame_set_in_samplerate(lame, 11025.0);
+        //lame_set_in_samplerate(lame, 11025.0);
+        lame_set_in_samplerate(lame, 7500.0);
         lame_set_VBR(lame, vbr_default);
         lame_init_params(lame);
         
@@ -488,11 +491,18 @@ RCT_EXPORT_METHOD(isWaveformShow:
         
         [self commonEvent];
         NSLog(@"[错误码:%d][错误:%@]",[errorCode errorCode], [errorCode errorDesc]);
+        if([errorCode errorCode] == 11201){
+            //超500次限制
+            [iOSSpeechViewController start];
+            
+            //后续未完成
+        }else {
+            NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
+            [dic setValue:@"confirm" forKey:@"type"];
+            [dic setValue:@"" forKey:@"voiceResult"];
+            _pick.bolock(dic);
+        }
         
-        NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
-        [dic setValue:@"confirm" forKey:@"type"];
-        [dic setValue:@"" forKey:@"voiceResult"];
-        _pick.bolock(dic);
     }
     
     //[self performSelectorOnMainThread:@selector(resetBtnSatus:) withObject:errorCode waitUntilDone:NO];
