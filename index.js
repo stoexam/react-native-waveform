@@ -19,7 +19,7 @@ export default {
 		WaveformViewModule._init(opt);
         this.listener && this.listener.remove();
         this.listener = NativeAppEventEmitter.addListener('confirmEvent', event => {
-            fnConf[event['type']](event['voiceResult']);
+            fnConf[event['type']](event['voiceResult'], event['voiceApiType']);
         });
 	},
 	start(options){

@@ -26,7 +26,12 @@
 #import "WaveformDialog.h"
 #import "lame.h"
 
+//#import "iOSSpeechViewController.h"
+//start ----- ios10 siri api
 #import "iOSSpeechViewController.h"
+#import <Speech/Speech.h>
+#import <AVFoundation/AVFoundation.h>
+//end -----
 
 #pragma mark - const values
 
@@ -45,7 +50,7 @@ NSString* const KCResultNotify3=@"停止评测，结果等待中...";
 
 #pragma mark -
 
-@interface WaveformViewModule () <IFlySpeechEvaluatorDelegate, ISESettingDelegate, ISEResultXmlParserDelegate ,IFlyPcmRecorderDelegate
+@interface WaveformViewModule () <IFlySpeechEvaluatorDelegate, ISESettingDelegate, ISEResultXmlParserDelegate ,IFlyPcmRecorderDelegate, SFSpeechRecognizerDelegate
 >
 
 @property(nonatomic,strong)WaveformDialog *pick;
@@ -65,6 +70,15 @@ NSString* const KCResultNotify3=@"停止评测，结果等待中...";
 
 @property (nonatomic,strong) IFlyPcmRecorder *pcmRecorder;//录音器，用于音频流识别的数据传入
 @property (nonatomic,assign) BOOL isBeginOfSpeech;//是否已经返回BeginOfSpeech回调
+
+//start ----- ios10 siri api
+@property (nonatomic,strong) SFSpeechRecognizer *speechRecognizer;
+@property (nonatomic,strong) AVAudioEngine *audioEngine;
+@property (nonatomic,strong) SFSpeechRecognitionTask *recognitionTask;
+@property (nonatomic, strong) NSString *resultString;
+@property (nonatomic, strong) NSString *recordTips;
+@property (nonatomic,strong) SFSpeechAudioBufferRecognitionRequest *recognitionRequest;
+//end -----
 
 @end
 
@@ -493,13 +507,14 @@ RCT_EXPORT_METHOD(isWaveformShow:
         NSLog(@"[错误码:%d][错误:%@]",[errorCode errorCode], [errorCode errorDesc]);
         if([errorCode errorCode] == 11201){
             //超500次限制
-            [iOSSpeechViewController start];
+            [self startIOSSpeech];
             
-            //后续未完成
+            //在 startRecording 中回调
         }else {
             NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
             [dic setValue:@"confirm" forKey:@"type"];
             [dic setValue:@"" forKey:@"voiceResult"];
+            [dic setValue:@"0" forKey:@"voiceApiType"];
             _pick.bolock(dic);
         }
         
@@ -597,6 +612,7 @@ RCT_EXPORT_METHOD(isWaveformShow:
     NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
     [dic setValue:@"confirm" forKey:@"type"];
     [dic setValue:resultJson forKey:@"voiceResult"];
+    [dic setValue:@"1" forKey:@"voiceApiType"];
     _pick.bolock(dic);
 }
 
@@ -720,5 +736,203 @@ RCT_EXPORT_METHOD(isWaveformShow:
     }
     return [self getObjectData:obj];
 }
+
+//----------------------------------- ios10 siri api
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    //self.recordButton.enabled = NO;
+}
+
+/**
+ 识别本地音频文件
+ 
+ @param sender <#sender description#>
+ */
+- (IBAction)recognizeLocalAudioFile:(UIButton *)sender {
+    NSLocale *local =[[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+    SFSpeechRecognizer *localRecognizer =[[SFSpeechRecognizer alloc] initWithLocale:local];
+    NSURL *url =[[NSBundle mainBundle] URLForResource:@"录音.m4a" withExtension:nil];
+    if (!url) return;
+    SFSpeechURLRecognitionRequest *res =[[SFSpeechURLRecognitionRequest alloc] initWithURL:url];
+    [localRecognizer recognitionTaskWithRequest:res resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"语音识别解析失败,%@",error);
+        }
+        else
+        {
+            //self.resultStringLable.text = result.bestTranscription.formattedString;
+            self.resultString = result.bestTranscription.formattedString;
+        }
+    }];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [SFSpeechRecognizer  requestAuthorization:^(SFSpeechRecognizerAuthorizationStatus status) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            switch (status) {
+                case SFSpeechRecognizerAuthorizationStatusNotDetermined:
+                    //self.recordButton.enabled = NO;
+                    //[self.recordButton setTitle:@"语音识别未授权" forState:UIControlStateDisabled];
+                    self.recordTips = @"语音识别未授权";
+                    break;
+                case SFSpeechRecognizerAuthorizationStatusDenied:
+                    //self.recordButton.enabled = NO;
+                    //[self.recordButton setTitle:@"用户未授权使用语音识别" forState:UIControlStateDisabled];
+                    self.recordTips = @"用户未授权使用语音识别";
+                    break;
+                case SFSpeechRecognizerAuthorizationStatusRestricted:
+                    //self.recordButton.enabled = NO;
+                    //[self.recordButton setTitle:@"语音识别在这台设备上受到限制" forState:UIControlStateDisabled];
+                    self.recordTips = @"语音识别在这台设备上受到限制";
+                    
+                    break;
+                case SFSpeechRecognizerAuthorizationStatusAuthorized:
+                    //self.recordButton.enabled = YES;
+                    //[self.recordButton setTitle:@"开始录音" forState:UIControlStateNormal];
+                    self.recordTips = @"开始录音";
+                    break;
+                    
+                default:
+                    break;
+            }
+            
+        });
+    }];
+}
+- (IBAction)recordButtonClicked:(UIButton *)sender {
+    if (self.audioEngine.isRunning) {
+        [self.audioEngine stop];
+        if (_recognitionRequest) {
+            [_recognitionRequest endAudio];
+        }
+        //self.recordButton.enabled = NO;
+        //[self.recordButton setTitle:@"正在停止" forState:UIControlStateDisabled];
+        self.recordTips = @"正在停止";
+        
+    }
+    else{
+        [self startRecording];
+        //[self.recordButton setTitle:@"停止录音" forState:UIControlStateNormal];
+        self.recordTips = @"正在录音";
+        
+    }
+}
+
+- (void)startIOSSpeech{
+    if(!self.audioEngine.isRunning){
+        [self startRecording];
+        self.recordTips = @"正在录音";
+    }
+}
+
+-(void)stopIOSSpeech{
+    if(self.audioEngine.isRunning){
+        [self.audioEngine stop];
+        if(_recognitionRequest){
+            [_recognitionRequest endAudio];
+        }
+        self.recordTips = @"正在停止";
+    }
+}
+
+- (void)startRecording{
+    if (_recognitionTask) {
+        [_recognitionTask cancel];
+        _recognitionTask = nil;
+    }
+    
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    NSError *error;
+    [audioSession setCategory:AVAudioSessionCategoryRecord error:&error];
+    NSParameterAssert(!error);
+    [audioSession setMode:AVAudioSessionModeMeasurement error:&error];
+    NSParameterAssert(!error);
+    [audioSession setActive:YES withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:&error];
+    NSParameterAssert(!error);
+    
+    _recognitionRequest = [[SFSpeechAudioBufferRecognitionRequest alloc] init];
+    AVAudioInputNode *inputNode = self.audioEngine.inputNode;
+    NSAssert(inputNode, @"录入设备没有准备好");
+    NSAssert(_recognitionRequest, @"请求初始化失败");
+    _recognitionRequest.shouldReportPartialResults = YES;
+    __weak typeof(self) weakSelf = self;
+    _recognitionTask = [self.speechRecognizer recognitionTaskWithRequest:_recognitionRequest resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        BOOL isFinal = NO;
+        if (result) {
+            //strongSelf.resultStringLable.text = result.bestTranscription.formattedString;
+            NSString *resultString = result.bestTranscription.formattedString;
+            strongSelf.resultString = resultString;
+            isFinal = result.isFinal;
+            
+            
+            NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
+            [dic setValue:@"confirm" forKey:@"type"];
+            [dic setValue:resultString forKey:@"voiceResult"];
+            [dic setValue:@"2" forKey:@"voiceApiType"];
+            _pick.bolock(dic);
+        }
+        if (error || isFinal) {
+            [self.audioEngine stop];
+            [inputNode removeTapOnBus:0];
+            strongSelf.recognitionTask = nil;
+            strongSelf.recognitionRequest = nil;
+            //strongSelf.recordButton.enabled = YES;
+            //[strongSelf.recordButton setTitle:@"开始录音" forState:UIControlStateNormal];
+        }
+        
+    }];
+    
+    AVAudioFormat *recordingFormat = [inputNode outputFormatForBus:0];
+    [inputNode installTapOnBus:0 bufferSize:1024 format:recordingFormat block:^(AVAudioPCMBuffer * _Nonnull buffer, AVAudioTime * _Nonnull when) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf.recognitionRequest) {
+            [strongSelf.recognitionRequest appendAudioPCMBuffer:buffer];
+        }
+    }];
+    
+    [self.audioEngine prepare];
+    [self.audioEngine startAndReturnError:&error];
+    NSParameterAssert(!error);
+    //self.resultStringLable.text = @"正在录音。。。";
+    self.resultString = @"正在录音。。。";
+}
+#pragma mark - lazyload
+- (AVAudioEngine *)audioEngine{
+    if (!_audioEngine) {
+        _audioEngine = [[AVAudioEngine alloc] init];
+    }
+    return _audioEngine;
+}
+- (SFSpeechRecognizer *)speechRecognizer{
+    if (!_speechRecognizer) {
+        //腰围语音识别对象设置语言，这里设置的是中文
+        NSLocale *local =[[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+        
+        _speechRecognizer =[[SFSpeechRecognizer alloc] initWithLocale:local];
+        _speechRecognizer.delegate = self;
+    }
+    return _speechRecognizer;
+}
+#pragma mark - SFSpeechRecognizerDelegate
+- (void)speechRecognizer:(SFSpeechRecognizer *)speechRecognizer availabilityDidChange:(BOOL)available{
+    if (available) {
+        //self.recordButton.enabled = YES;
+        //[self.recordButton setTitle:@"开始录音" forState:UIControlStateNormal];
+        self.recordTips = @"开始录音";
+    }
+    else{
+        self.recordTips = @"语音识别不可用";
+    }
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+//-----------------------------------
 
 @end

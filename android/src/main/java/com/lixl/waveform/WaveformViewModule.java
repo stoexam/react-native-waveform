@@ -384,6 +384,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         //map.putArray("selectedValue", values);
         //map.putArray("selectedIndex", indexes);
         map.putString("voiceResult", voiceResult);
+        map.putString("voiceApiType", "1");
         sendEvent(getReactApplicationContext(), CONFIRM_EVENT_NAME, map);
     }
 

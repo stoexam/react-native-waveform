@@ -150,6 +150,8 @@
             //strongSelf.resultStringLable.text = result.bestTranscription.formattedString;
             strongSelf.resultString = result.bestTranscription.formattedString;
             isFinal = result.isFinal;
+            
+            
         }
         if (error || isFinal) {
             [self.audioEngine stop];
@@ -158,7 +160,6 @@
             strongSelf.recognitionRequest = nil;
             //strongSelf.recordButton.enabled = YES;
             //[strongSelf.recordButton setTitle:@"开始录音" forState:UIControlStateNormal];
-            strongSelf.recordTips = @"开始录音";
         }
      
     }];
