@@ -285,8 +285,8 @@ RCT_EXPORT_METHOD(_init:
     
     
     //Appid 是应用的身份信息，具有唯一性，初始化时必须要传入 Appid。
-    NSString *initString = [[NSString alloc] initWithFormat:@"appid=%@", @"594e1124"];
-    [IFlySpeechUtility createUtility:initString];
+    //NSString *initString = [[NSString alloc] initWithFormat:@"appid=%@", @"594exxxx"];
+    //[IFlySpeechUtility createUtility:initString];
     [self initIFly: standardTxt];
     
     //callback(@[output]);
@@ -502,10 +502,11 @@ RCT_EXPORT_METHOD(isWaveformShow:
     if(errorCode && errorCode.errorCode!=0){
         [self.popupView setText:[NSString stringWithFormat:@"错误码：%d %@",[errorCode errorCode],[errorCode errorDesc]]];
         //[self.view addSubview:self.popupView];
-        
+        //[_pcmRecorder stop];
         [self commonEvent];
         NSLog(@"[错误码:%d][错误:%@]",[errorCode errorCode], [errorCode errorDesc]);
         if([errorCode errorCode] == 11201){
+//        if(1==1){
             //超500次限制
             [self startIOSSpeech];
             
