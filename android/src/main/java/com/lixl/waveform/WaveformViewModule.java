@@ -183,7 +183,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         activity = getCurrentActivity();
         if(activity != null){
             mContext = activity.getApplicationContext();
-            SpeechUtility.createUtility(mContext, "appid=" + mContext.getString(R.string.app_id));
+            //SpeechUtility.createUtility(mContext, "appid=" + mContext.getString(R.string.app_id));
             View view = activity.getLayoutInflater().inflate(R.layout.activity_main, null);
 
             isAlive = true;
