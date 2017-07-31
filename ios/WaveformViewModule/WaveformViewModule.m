@@ -502,11 +502,13 @@ RCT_EXPORT_METHOD(isWaveformShow:
     if(errorCode && errorCode.errorCode!=0){
         [self.popupView setText:[NSString stringWithFormat:@"错误码：%d %@",[errorCode errorCode],[errorCode errorDesc]]];
         //[self.view addSubview:self.popupView];
-        //[_pcmRecorder stop];
         [self commonEvent];
         NSLog(@"[错误码:%d][错误:%@]",[errorCode errorCode], [errorCode errorDesc]);
         if([errorCode errorCode] == 11201){
 //        if(1==1){
+            if(_pcmRecorder){
+                [_pcmRecorder stop];
+            }
             //超500次限制
             [self startIOSSpeech];
             
@@ -516,6 +518,9 @@ RCT_EXPORT_METHOD(isWaveformShow:
             [dic setValue:@"confirm" forKey:@"type"];
             [dic setValue:@"" forKey:@"voiceResult"];
             [dic setValue:@"0" forKey:@"voiceApiType"];
+            //test
+            //[dic setValue:@"中国" forKey:@"voiceResult"];
+            //[dic setValue:@"2" forKey:@"voiceApiType"];
             _pick.bolock(dic);
         }
         
