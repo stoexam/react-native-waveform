@@ -28,9 +28,9 @@
 
 //#import "iOSSpeechViewController.h"
 //start ----- ios10 siri api
-#import "iOSSpeechViewController.h"
-#import <Speech/Speech.h>
-#import <AVFoundation/AVFoundation.h>
+//#import "iOSSpeechViewController.h"
+//#import <Speech/Speech.h>
+//#import <AVFoundation/AVFoundation.h>
 //end -----
 
 #pragma mark - const values
@@ -50,7 +50,8 @@ NSString* const KCResultNotify3=@"停止评测，结果等待中...";
 
 #pragma mark -
 
-@interface WaveformViewModule () <IFlySpeechEvaluatorDelegate, ISESettingDelegate, ISEResultXmlParserDelegate ,IFlyPcmRecorderDelegate, SFSpeechRecognizerDelegate
+@interface WaveformViewModule () <IFlySpeechEvaluatorDelegate, ISESettingDelegate, ISEResultXmlParserDelegate ,IFlyPcmRecorderDelegate
+//, SFSpeechRecognizerDelegate
 >
 
 @property(nonatomic,strong)WaveformDialog *pick;
@@ -72,12 +73,14 @@ NSString* const KCResultNotify3=@"停止评测，结果等待中...";
 @property (nonatomic,assign) BOOL isBeginOfSpeech;//是否已经返回BeginOfSpeech回调
 
 //start ----- ios10 siri api
+/*
 @property (nonatomic,strong) SFSpeechRecognizer *speechRecognizer;
 @property (nonatomic,strong) AVAudioEngine *audioEngine;
 @property (nonatomic,strong) SFSpeechRecognitionTask *recognitionTask;
 @property (nonatomic, strong) NSString *resultString;
 @property (nonatomic, strong) NSString *recordTips;
 @property (nonatomic,strong) SFSpeechAudioBufferRecognitionRequest *recognitionRequest;
+*/
 //end -----
 
 @end
@@ -91,6 +94,8 @@ NSString* const KCResultNotify3=@"停止评测，结果等待中...";
 //NSString *resultText = nil;
 
 NSString *selfVoice = nil;
+
+bool isWaveformShowing = false;
 
 RCT_EXPORT_MODULE();
 
@@ -289,6 +294,8 @@ RCT_EXPORT_METHOD(_init:
     //[IFlySpeechUtility createUtility:initString];
     [self initIFly: standardTxt];
     
+    isWaveformShowing = true;
+    
     //callback(@[output]);
 }
 
@@ -300,7 +307,8 @@ RCT_EXPORT_METHOD(start:
         standardTxt = options[@"standardTxt"];
     }
     [self initIFly: standardTxt];
-
+    
+    isWaveformShowing = true;
 }
 
 RCT_EXPORT_METHOD(stop) {
@@ -316,6 +324,8 @@ RCT_EXPORT_METHOD(stop) {
     }
     
     [self.iFlySpeechEvaluator stopListening];
+    
+    isWaveformShowing = false;
     
     //[self.resultView resignFirstResponder];
     //[self.textView resignFirstResponder];
@@ -342,7 +352,9 @@ RCT_EXPORT_METHOD(isWaveformShow:
     } else {
         callback.invoke(null, dialog.isShowing());
     }
-    */
+     */
+    callback(@[@YES, @(isWaveformShowing)]);
+    return;
     if (self.pick) {
         
         CGFloat pickY=_pick.frame.origin.y;
@@ -506,11 +518,11 @@ RCT_EXPORT_METHOD(isWaveformShow:
         NSLog(@"[错误码:%d][错误:%@]",[errorCode errorCode], [errorCode errorDesc]);
         if([errorCode errorCode] == 11201){
 //        if(1==1){
-            if(_pcmRecorder){
-                [_pcmRecorder stop];
-            }
+            //if(_pcmRecorder){
+            //    [_pcmRecorder stop];
+            //}
             //超500次限制
-            [self startIOSSpeech];
+            //[self startIOSSpeech];
             
             //在 startRecording 中回调
         }else {
@@ -744,17 +756,13 @@ RCT_EXPORT_METHOD(isWaveformShow:
 }
 
 //----------------------------------- ios10 siri api
-
+/*
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //self.recordButton.enabled = NO;
 }
 
-/**
- 识别本地音频文件
- 
- @param sender <#sender description#>
- */
+ //识别本地音频文件
+ // @param sender <#sender description#>
 - (IBAction)recognizeLocalAudioFile:(UIButton *)sender {
     NSLocale *local =[[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
     SFSpeechRecognizer *localRecognizer =[[SFSpeechRecognizer alloc] initWithLocale:local];
@@ -767,7 +775,6 @@ RCT_EXPORT_METHOD(isWaveformShow:
         }
         else
         {
-            //self.resultStringLable.text = result.bestTranscription.formattedString;
             self.resultString = result.bestTranscription.formattedString;
         }
     }];
@@ -780,24 +787,16 @@ RCT_EXPORT_METHOD(isWaveformShow:
         dispatch_async(dispatch_get_main_queue(), ^{
             switch (status) {
                 case SFSpeechRecognizerAuthorizationStatusNotDetermined:
-                    //self.recordButton.enabled = NO;
-                    //[self.recordButton setTitle:@"语音识别未授权" forState:UIControlStateDisabled];
                     self.recordTips = @"语音识别未授权";
                     break;
                 case SFSpeechRecognizerAuthorizationStatusDenied:
-                    //self.recordButton.enabled = NO;
-                    //[self.recordButton setTitle:@"用户未授权使用语音识别" forState:UIControlStateDisabled];
                     self.recordTips = @"用户未授权使用语音识别";
                     break;
                 case SFSpeechRecognizerAuthorizationStatusRestricted:
-                    //self.recordButton.enabled = NO;
-                    //[self.recordButton setTitle:@"语音识别在这台设备上受到限制" forState:UIControlStateDisabled];
                     self.recordTips = @"语音识别在这台设备上受到限制";
                     
                     break;
                 case SFSpeechRecognizerAuthorizationStatusAuthorized:
-                    //self.recordButton.enabled = YES;
-                    //[self.recordButton setTitle:@"开始录音" forState:UIControlStateNormal];
                     self.recordTips = @"开始录音";
                     break;
                     
@@ -814,14 +813,11 @@ RCT_EXPORT_METHOD(isWaveformShow:
         if (_recognitionRequest) {
             [_recognitionRequest endAudio];
         }
-        //self.recordButton.enabled = NO;
-        //[self.recordButton setTitle:@"正在停止" forState:UIControlStateDisabled];
         self.recordTips = @"正在停止";
         
     }
     else{
         [self startRecording];
-        //[self.recordButton setTitle:@"停止录音" forState:UIControlStateNormal];
         self.recordTips = @"正在录音";
         
     }
@@ -869,7 +865,6 @@ RCT_EXPORT_METHOD(isWaveformShow:
         __strong typeof(weakSelf) strongSelf = weakSelf;
         BOOL isFinal = NO;
         if (result) {
-            //strongSelf.resultStringLable.text = result.bestTranscription.formattedString;
             NSString *resultString = result.bestTranscription.formattedString;
             strongSelf.resultString = resultString;
             isFinal = result.isFinal;
@@ -886,8 +881,6 @@ RCT_EXPORT_METHOD(isWaveformShow:
             [inputNode removeTapOnBus:0];
             strongSelf.recognitionTask = nil;
             strongSelf.recognitionRequest = nil;
-            //strongSelf.recordButton.enabled = YES;
-            //[strongSelf.recordButton setTitle:@"开始录音" forState:UIControlStateNormal];
         }
         
     }];
@@ -903,7 +896,6 @@ RCT_EXPORT_METHOD(isWaveformShow:
     [self.audioEngine prepare];
     [self.audioEngine startAndReturnError:&error];
     NSParameterAssert(!error);
-    //self.resultStringLable.text = @"正在录音。。。";
     self.resultString = @"正在录音。。。";
 }
 #pragma mark - lazyload
@@ -926,8 +918,6 @@ RCT_EXPORT_METHOD(isWaveformShow:
 #pragma mark - SFSpeechRecognizerDelegate
 - (void)speechRecognizer:(SFSpeechRecognizer *)speechRecognizer availabilityDidChange:(BOOL)available{
     if (available) {
-        //self.recordButton.enabled = YES;
-        //[self.recordButton setTitle:@"开始录音" forState:UIControlStateNormal];
         self.recordTips = @"开始录音";
     }
     else{
@@ -938,7 +928,7 @@ RCT_EXPORT_METHOD(isWaveformShow:
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+*/
 //-----------------------------------
 
 @end

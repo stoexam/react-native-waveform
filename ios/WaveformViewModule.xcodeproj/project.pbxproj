@@ -46,7 +46,6 @@
 		8405EA011F00BD53008C4FE5 /* libc++.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8405EA001F00BD53008C4FE5 /* libc++.1.dylib */; };
 		8405EA031F00BD75008C4FE5 /* libicucore.A.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8405EA021F00BD75008C4FE5 /* libicucore.A.dylib */; };
 		8405EA041F00BE35008C4FE5 /* iflyMSC.framework in Sources */ = {isa = PBXBuildFile; fileRef = 8405E9191EFE5F25008C4FE5 /* iflyMSC.framework */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		842076E01F25988F005ED424 /* iOSSpeechViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 842076DF1F25988F005ED424 /* iOSSpeechViewController.m */; };
 		842076E21F25A85A005ED424 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 842076E11F25A85A005ED424 /* libmp3lame.a */; };
 		845972F91F01C88600628E1E /* WaveformDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 845972F81F01C88600628E1E /* WaveformDialog.m */; };
 /* End PBXBuildFile section */
@@ -118,8 +117,6 @@
 		8405E9F91F00AF0C008C4FE5 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		8405EA001F00BD53008C4FE5 /* libc++.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.1.dylib"; path = "../../../../../../../../../../usr/lib/libc++.1.dylib"; sourceTree = "<group>"; };
 		8405EA021F00BD75008C4FE5 /* libicucore.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.A.dylib; path = ../../../../../../../../../../usr/lib/libicucore.A.dylib; sourceTree = "<group>"; };
-		842076DE1F25988F005ED424 /* iOSSpeechViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSSpeechViewController.h; sourceTree = "<group>"; };
-		842076DF1F25988F005ED424 /* iOSSpeechViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iOSSpeechViewController.m; sourceTree = "<group>"; };
 		842076E11F25A85A005ED424 /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
 		845972F71F01C85800628E1E /* WaveformDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WaveformDialog.h; sourceTree = "<group>"; };
 		845972F81F01C88600628E1E /* WaveformDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveformDialog.m; sourceTree = "<group>"; };
@@ -274,8 +271,6 @@
 		E839CE2A1B3EF54100115CBE /* WaveformViewModule */ = {
 			isa = PBXGroup;
 			children = (
-				842076DE1F25988F005ED424 /* iOSSpeechViewController.h */,
-				842076DF1F25988F005ED424 /* iOSSpeechViewController.m */,
 				8405E9E61F009CF5008C4FE5 /* Definition.h */,
 				8405E9C31F009C9E008C4FE5 /* tools */,
 				8405E99F1F009C58008C4FE5 /* Results */,
@@ -363,7 +358,6 @@
 				8405E9DC1F009C9E008C4FE5 /* AlertView.m in Sources */,
 				8405E9E31F009C9E008C4FE5 /* SBJson4StreamWriter.m in Sources */,
 				8405E9B81F009C58008C4FE5 /* ISEResult.m in Sources */,
-				842076E01F25988F005ED424 /* iOSSpeechViewController.m in Sources */,
 				8405E9E11F009C9E008C4FE5 /* SBJson4StreamParserState.m in Sources */,
 				8405E9B91F009C58008C4FE5 /* ISEResultFinal.m in Sources */,
 				8405E9C01F009C58008C4FE5 /* ISEResultTools.m in Sources */,
