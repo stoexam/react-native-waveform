@@ -296,6 +296,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         }
         hideDialog();
         //commonEvent(EVENT_KEY_CONFIRM);
+        commonEvent(EVENT_KEY_CONFIRM);
     }
 
     private static final String ERROR_NOT_INIT = "please initialize the component first";
