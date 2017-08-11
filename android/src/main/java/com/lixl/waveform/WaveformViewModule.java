@@ -49,7 +49,7 @@ import com.lixl.waveform.view.VoiceLineView;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.io.InterruptedIOException;
 
 import android.widget.Toast;
 
@@ -179,7 +179,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
     }
 
     @ReactMethod
-    public void _init(ReadableMap options){
+    public void _init(ReadableMap options) throws InterruptedException {
         activity = getCurrentActivity();
         if(activity != null){
             mContext = activity.getApplicationContext();
@@ -222,12 +222,11 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             }
 
             voiceLineView = (VoiceLineView)view.findViewById(R.id.voicLine);
-            initMediaRecorder();
+//            initMediaRecorder();
 
             if(mIse == null){
                 mIse = SpeechEvaluator.createEvaluator(mContext, null);
             }
-            //showTip("is mIse == null ? " + (mIse == null));
             startEvaluate();
 
             bindButtonClick(view);
@@ -245,7 +244,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         }
         if (!dialog.isShowing()) {
             isAlive = true;
-            initMediaRecorder();
+//            initMediaRecorder();
 
             if(options != null && options.hasKey(STANDARD_TXT)){
                 standardTxt = options.getString(STANDARD_TXT);
@@ -269,21 +268,14 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         if (dialog.isShowing()) {
 
             isAlive = false;
-            mMediaRecorder.stop();
-            mMediaRecorder.release();
-            mMediaRecorder = null;
+            if(mMediaRecorder != null) {
+                mMediaRecorder.stop();
+                mMediaRecorder.release();
+                mMediaRecorder = null;
+            }
 
             dialog.dismiss();
             handler.removeCallbacks(this);
-
-            //commonEvent(EVENT_KEY_CONFIRM);
-            /*new Handler().postDelayed(new Runnable(){
-                public void run() {
-                    //execute the task
-                    commonEvent(EVENT_KEY_CONFIRM);
-                }
-            }, 1000);*/
-            //将这里的回调，移到了 mEvaluatorListener  的 onResult 中
         }
     }
 
@@ -295,7 +287,6 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             showTip("mIse.isEvaluating()=" + (mIse.isEvaluating()));
         }
         hideDialog();
-        //commonEvent(EVENT_KEY_CONFIRM);
         commonEvent(EVENT_KEY_CONFIRM);
     }
 
@@ -318,6 +309,8 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
             super.handleMessage(msg);
             if(mMediaRecorder==null) return;
             double ratio = (double) mMediaRecorder.getMaxAmplitude() / 100;
+            //if(mIse == null) return;
+            //double ratio = (double) mIse.get
             double db = 0;// 分贝
             //默认的最大音量是100,可以修改，但其实默认的，在测试过程中就有不错的表现
             //你可以传自定义的数字进去，但需要在一定的范围内，比如0-200，就需要在xml文件中配置maxVolume
@@ -341,8 +334,10 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
     @Override
     public void onHostDestroy() {
         isAlive = false;
-        mMediaRecorder.release();
-        mMediaRecorder = null;
+        if(mMediaRecorder != null) {
+            mMediaRecorder.release();
+            mMediaRecorder = null;
+        }
     }
 
     @Override
@@ -377,13 +372,12 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
                 voiceResult = result.toString();
                 Log.d(TAG, "结果：" + voiceResult);
                 showTip("结果：" + voiceResult);
+
             } else {
                 showTip("解析结果为空");
             }
         }
 
-        //map.putArray("selectedValue", values);
-        //map.putArray("selectedIndex", indexes);
         map.putString("voiceResult", voiceResult);
         map.putString("voiceApiType", "1");
         sendEvent(getReactApplicationContext(), CONFIRM_EVENT_NAME, map);
@@ -516,8 +510,13 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
 
         // 设置音频保存路径，保存音频格式支持pcm、wav，设置路径为sd卡请注意WRITE_EXTERNAL_STORAGE权限
         // 注：AUDIO_FORMAT参数语记需要更新版本才能生效
+//        mIse.setParameter(SpeechConstant.AUDIO_FORMAT, null);
+//        mIse.setParameter(SpeechConstant.ISE_AUDIO_PATH, "");
+
+        String fullPath = mContext.getApplicationContext().getExternalFilesDir("").getAbsolutePath();
         mIse.setParameter(SpeechConstant.AUDIO_FORMAT, "wav");
-        mIse.setParameter(SpeechConstant.ISE_AUDIO_PATH, Environment.getExternalStorageDirectory().getAbsolutePath() + "/msc/ise.wav");
+        //mIse.setParameter(SpeechConstant.ISE_AUDIO_PATH, fullPath + "/self.wav");
+        mIse.setParameter(SpeechConstant.ISE_AUDIO_PATH, fullPath + "/self");
     }
 
     private void showTip(String str) {
