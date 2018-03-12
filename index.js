@@ -31,7 +31,7 @@ export default {
     isWaveformShow(callback){
 		WaveformViewModule.isWaveformShow(callback);
 	},
-	initVoice(options){
+	/*initVoice(options){
 		let opt = {
 		    onStop(){},
 			...options
@@ -47,6 +47,23 @@ export default {
 	},
 	startVoice(options){
 		WaveformViewModule.startRecordVoice(options);
+	},*/
+	startDictation(options){
+		let opt = {
+		    onStop(){},
+			...options
+		};
+		let fnConf = {
+			confirm: opt.onStop,
+		};
+		WaveformViewModule.startDictation(opt);
+        this.listener && this.listener.remove();
+        this.listener = NativeAppEventEmitter.addListener('confirmEvent', event => {
+            fnConf[event['type']](event['voiceResult'], event['voiceApiType']);
+        });
+	},
+	stopDictation() {
+		WaveformViewModule.stopDictation();
 	},
 	alert(msg){
     	WaveformViewModule.alert(msg);
