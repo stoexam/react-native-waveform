@@ -873,7 +873,7 @@ public class WaveformViewModule extends ReactContextBaseJavaModule implements Ru
         mIat.setParameter(SpeechConstant.AUDIO_FORMAT, "wav");
         //mIse.setParameter(SpeechConstant.ISE_AUDIO_PATH, fullPath + "/self.wav");
         //mIse.setParameter(SpeechConstant.ISE_AUDIO_PATH, fullPath + "/self");
-        mIat.setParameter(SpeechConstant.ISE_AUDIO_PATH, fullPath + "/" + destinationDir);
+        mIat.setParameter(SpeechConstant.ASR_AUDIO_PATH, fullPath + "/" + destinationDir);
         try {
             File f = new File(fullPath + "/" + destinationDir);
             if(f.exists()){
